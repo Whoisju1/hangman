@@ -1,11 +1,15 @@
 {
-  "name": "hangman",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.html",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Juan John-Charles",
-  "license": "ISC"
+    "name": "hangman",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.html",
+    "scripts": {
+        "compile:sass": "node-sass assets/styles/scss/main.scss assets/styles/css/main.css --watch"
+    },
+    "author": "Juan John-Charles",
+    "license": "ISC",
+    "dependencies": {},
+    "devDependencies": {
+        "node-sass": "^4.5.3"
+    }
 }
