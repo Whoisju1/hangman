@@ -16,10 +16,12 @@ const HANGMAN = {};
             this.isIncluded = this.isIncluded.bind(this);
         }
 
+        // method to test if user letter choice is present in word
         isIncluded(char) {
             return this.word.includes(char.toLowerCase().trim());
         }
 
+        //method to test if word is correct
         isMatched(letters) {
             return this.word === letters.toLowerCase().trim() ? true : false;
         }
@@ -42,15 +44,3 @@ const HANGMAN = {};
     };
     
 })(HANGMAN);
-
-let names = HANGMAN.wordFactory(['Juan', 'Bonnie', 'Their Kids', 'a big dog']);
-console.log('names: ', names);
-
-let names2 = HANGMAN.wordFactory('Juan', 'Bonnie', 'Their Kids', 'a big dog');
-
-let singleName = HANGMAN.wordFactory('just one');
-
-
-console.log('names2: ', names2);
-
-console.log('sinlge name: ', singleName);
