@@ -125,52 +125,63 @@ const HANGMAN = {};
     };
 
     HANGMAN.makeElem = makeElem;
+
+    // take a string as argument and return a string with spaces between every character of the original string
+
+    let spaceCharacters = (str) => {
+        let wordArr = [...str];
+        let dashedString = wordArr.join(" ");
+        return dashedString;
+    };
+
+    HANGMAN.spaceCharacters = spaceCharacters;
+
+    // this takes in two arguments, the answer and the user's guess
+    // if the letter guess is present in the answer it outputs an array of objects with the 
+    // letter as a string and the index at which the letter is present in the answer string
+    let guesses = (answer, letterGuessed) =>{
+        return (
+            [...answer].reduce((arr, letter, index) => { 
+                if (letterGuessed === letter) {
+                    let obj = {
+                        key: letterGuessed,
+                        index: index
+                    };
+                    arr.push(obj);
+                }
+                return arr;
+            }, [])
+        );
+    };
+
+    HANGMAN.guesses = guesses;
+
+    // replaces characters in a string where with provided replacement character and index where it should be placed
+// it receives two arguments, a string and an array of objects containing a character the user guessed and it's index in the answer
+// all characters provided are contained in the answer
+    const replace = (word, input) => {
+        let resultStr = input.reduce((previous, guess) => {
+            // insert each letter according to it's provided index
+            if(guess.index !== -1) return previous.substring(0, guess.index) + guess.key + previous.substring(guess.index + 1, previous.length);
+        }, word);
+
+        // return altered string as output
+        return resultStr;
+    };
+
+    HANGMAN.replace = replace;
     
 })(HANGMAN);
 
 
 const gameWords = HANGMAN.wordFactory(['one', 'compliment', 'deliberate', 'confidence', 'dynamic', 'javascript']);
-const {makeElem, makeDashes} = HANGMAN;
+const {makeElem, makeDashes, spaceCharacters, guesses, replace} = HANGMAN;
 
 
-// this takes in two arguments, the answer and the user's guess
-// if the letter guess is present in the answer it outputs an array of objects with the 
-// letter as a string and the index at which the letter is present in the answer string
-let guesses = (answer, letterGuessed) =>{
-    return (
-        [...answer].reduce((arr, letter, index) => { 
-            if (letterGuessed === letter) {
-                let obj = {
-                    key: letterGuessed,
-                    index: index
-                };
-                arr.push(obj);
-            }
-            return arr;
-        }, [])
-    );
-};
+let gameConfig = (words, methods) => {
 
-// replaces characters in a string where with provided replacement character and index where it should be placed
-// it receives two arguments, a string and an array of objects containing a character the user guessed and it's index in the answer
-// all characters provided are contained in the answer
-let replace = (word, input) => {
-    let resultStr = input.reduce((previous, guess) => {
-        // insert each letter according to it's provided index
-        if(guess.index !== -1) return previous.substring(0, guess.index) + guess.key + previous.substring(guess.index + 1, previous.length);
-    }, word);
-
-    // return altered string as output
-    return resultStr;
-};
-
-
-let game = makeElem()
-    .addClass("nice")
-    .appendTo(document.body);
+    const [makeElem, makeDashes, spaceCharacters, guesses, replace] = methods;
     
-
-let playGame = (words) => {
     const body = document.body;
 
     let input = [];
@@ -187,8 +198,13 @@ let playGame = (words) => {
     let wins = 0;
     let losses = 0;
     
-    let puzzleWord = HANGMAN.makeDashes(word);
-    
+    let puzzleWord = makeDashes(word);
+
+    let game = makeElem()
+    .addClass("nice")
+    .text(`word to solve ${spaceCharacters(puzzleWord)}`)
+    .appendTo(body);
+
     body.onkeyup = (e) => {
         let {key} = e;
         let userGuess = guesses(word, key);
@@ -202,38 +218,40 @@ let playGame = (words) => {
         
         puzzleWord = replace(puzzleWord, input);
 
-
+        // when the user gets guesses all the letters in the word
         if (words[count].isMatched(puzzleWord)) {
             wins++;
             winsDiv.text(`wins: ${wins}`);
             game
-            .text(`Word so far: ${puzzleWord}`);
+            .text(`Word so far: ${spaceCharacters(puzzleWord)}`);
             
+            // move to next word when the user presses enter
             if (key === "Enter") {
                 if (words[count] !== words[words.length-1]) {
                     count = inc(count);
                     word = words[count].word;
-                    puzzleWord = HANGMAN.makeDashes(word);
+                    puzzleWord = makeDashes(word);
                     input = [];        
                     game
-                    .text(`Word so far: ${puzzleWord}`);   
+                    .text(`Word so far: ${spaceCharacters(puzzleWord)}`);   
                 } else {
+                    // the game resets when all the words have been solved
                     alert('Congratulations you have found all the words');
                     count = inc();
                     word = words[count].word;
-                    puzzleWord = HANGMAN.makeDashes(word);
+                    puzzleWord = makeDashes(word);
                     input = [];        
                     game
-                    .text(`Word so far: ${puzzleWord}`); 
+                    .text(`Word so far: ${spaceCharacters(puzzleWord)}`); 
                 }
                  
             }
         }
     
         game
-            .text(`Word so far: ${puzzleWord}`);
+            .text(`Word so far: ${spaceCharacters(puzzleWord)}`);
     
     };
 };
 
-playGame(gameWords);
+gameConfig(gameWords, [makeElem, makeDashes, spaceCharacters, guesses, replace]);
