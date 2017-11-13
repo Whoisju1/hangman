@@ -6,6 +6,7 @@ const HANGMAN = {};
 (namespace => {
 
     // -----------------------WORD CLASS------------------------
+    // used to make words for game
     class Word {
         constructor(word) {
             this.word = word.toLowerCase();
@@ -55,7 +56,9 @@ const HANGMAN = {};
 
     HANGMAN.arrayIterator = arrayIterator;
 
-    const makeDashes = (answer, guess) => {
+    // This method takes in a string and outputs a string of underscores
+    // proportionate to the number of characters contained in the string
+    const makeDashes = (answer) => {
         let dashed = [];
         (function looper (answer) {
             let [a, ...b] = [...answer];
@@ -64,12 +67,13 @@ const HANGMAN = {};
             if (answer.length === 1) return;
             looper (b);
         })(answer);
-        // if (dashed.join().includes(" ")) return dashed.join('');
         return dashed.join('');
     };
 
     HANGMAN.makeDashes = makeDashes;
 
+    // this is a method used for DOM manipulation
+    // the names of the functions within it borrow from jQuery
     const makeElem = (elemName) => {
         let elem = document.createElement(elemName = 'div');
 
@@ -170,88 +174,151 @@ const HANGMAN = {};
     };
 
     HANGMAN.replace = replace;
+
+    // takes in a number increments it by one and returns the incremented number 
+    const inc = (num = -1) => num+1;
+
+    HANGMAN.inc = inc;
     
 })(HANGMAN);
 
 
 const gameWords = HANGMAN.wordFactory(['one', 'compliment', 'deliberate', 'confidence', 'dynamic', 'javascript']);
-const {makeElem, makeDashes, spaceCharacters, guesses, replace} = HANGMAN;
+const {makeElem, makeDashes, spaceCharacters, guesses, replace, inc} = HANGMAN;
+const methodsArr = [makeElem, makeDashes, spaceCharacters, guesses, replace, inc];
 
 
-let gameConfig = (words, methods) => {
+const gameConfig = (words, methods) => {
 
-    const [makeElem, makeDashes, spaceCharacters, guesses, replace] = methods;
-    
     const body = document.body;
 
+    const [makeElem, makeDashes, spaceCharacters, guesses, replace, inc] = methods;
+    
     let input = [];
-
-    let inc = (num = -1) => num+1;
 
     let count = inc();
     
     let {word}= words[count];
 
-    let winsDiv = makeElem().text('wins').appendTo(body);
-    let lossesDiv = makeElem().text('losses').appendTo(body);
-
     let wins = 0;
-    let losses = 0;
     
+    let chances = 5;
+
+    let guessedLetters = [];
+
     let puzzleWord = makeDashes(word);
 
-    let game = makeElem()
-    .addClass("nice")
-    .text(`word to solve ${spaceCharacters(puzzleWord)}`)
-    .appendTo(body);
+    let winsDiv = makeElem().addClass('wins').text('wins').appendTo(body);
+    let chancesDiv = makeElem().addClass('chances-left').text(`chances: ${chances}`).appendTo(body);
+    let wrongGuessesDiv = makeElem().addClass('wrong-guesses').text(`No wrong guesses yet!`).appendTo(body);
+    let wordProgressDiv = makeElem()
+        .addClass("word-progress")
+        .text(`word to solve ${spaceCharacters(puzzleWord)}`)
+        .appendTo(body);
+    
+    let victory = false; 
+
+    let canIncScores = true;
+    let acknowledgeGuesses = true;
+
+    const softReset = () => {
+        guessedLetters = [];
+        count = inc(count);
+        word = words[count].word;
+        puzzleWord = makeDashes(word);
+        input = [];        
+        chances = 5;
+        wordProgressDiv
+        .text(`Word so far: ${spaceCharacters(puzzleWord)}`); 
+        wrongGuessesDiv.empty();  
+    };
+
+    const hardReset = () => {
+        alert('Congratulations you have found all the words');
+        guessedLetters = [];
+        canIncScores = true;
+        count = inc();
+        word = words[count].word;
+        puzzleWord = makeDashes(word);
+        input = [];  
+        chances = 5;      
+        wins = 0;
+        wordProgressDiv
+        .text(`Word so far: ${spaceCharacters(puzzleWord)}`); 
+        wrongGuessesDiv.empty();
+    };
 
     body.onkeyup = (e) => {
+        const isAlphabet = str => /^[a-zA-Z()]$/.test(str);
+          
         let {key} = e;
+        if (isAlphabet(key)) key = key.toLowerCase();
         let userGuess = guesses(word, key);
 
-        if (!userGuess) {
-            losses--;
-            lossesDiv.text(`Losses: ${losses}`);
-        }
+        // this function tests the key entered to find out if it is an alphabetical character 
+        const alphabetTestPast = isAlphabet(key);
         
-        input.push(...userGuess);
+        // spread array and push them into the input array
+        if (acknowledgeGuesses) input.push(...userGuess);
         
         puzzleWord = replace(puzzleWord, input);
 
+        // if user guesses wrong
+        if (!words[count].isIncluded(key) && canIncScores === true && chances >= 1 && alphabetTestPast && !guessedLetters.includes(key)) {
+            chances--;
+            guessedLetters.push(key);
+            makeElem().text(key).appendTo(wrongGuessesDiv);
+        }
+
+        // when chances have run out (LOSES)
+        if(!chances) {
+            acknowledgeGuesses = false;
+            // alert('You lost!');
+            // count = inc();
+            if (key === "Enter") {
+                count = inc();
+                wrongGuessesDiv.empty();
+                acknowledgeGuesses = true;
+                word = words[count].word;
+                puzzleWord = makeDashes(word);
+                input = [];  
+                chances = 5;      
+                wordProgressDiv
+                .text(`Word so far: ${spaceCharacters(puzzleWord)}`); 
+            }
+        } 
+
+        //  player completed every word -----TODO-----
+        // if (wins === words.length) {
+        //     alert('VICTORY!!!!!');
+        // }
+        
         // when the user gets guesses all the letters in the word
         if (words[count].isMatched(puzzleWord)) {
-            wins++;
+            if (canIncScores) wins++;
+            canIncScores = false;
             winsDiv.text(`wins: ${wins}`);
-            game
+            wordProgressDiv
             .text(`Word so far: ${spaceCharacters(puzzleWord)}`);
-            
+
             // move to next word when the user presses enter
             if (key === "Enter") {
+                canIncScores = true;
                 if (words[count] !== words[words.length-1]) {
-                    count = inc(count);
-                    word = words[count].word;
-                    puzzleWord = makeDashes(word);
-                    input = [];        
-                    game
-                    .text(`Word so far: ${spaceCharacters(puzzleWord)}`);   
+                    //  to next word and reset negative record regarding eat individual word
+                    softReset();
                 } else {
                     // the game resets when all the words have been solved
-                    alert('Congratulations you have found all the words');
-                    count = inc();
-                    word = words[count].word;
-                    puzzleWord = makeDashes(word);
-                    input = [];        
-                    game
-                    .text(`Word so far: ${spaceCharacters(puzzleWord)}`); 
+                   hardReset();
                 }
-                 
             }
         }
-    
-        game
+        
+        chancesDiv.text(`chances: ${chances}`);
+        wordProgressDiv
             .text(`Word so far: ${spaceCharacters(puzzleWord)}`);
     
     };
 };
 
-gameConfig(gameWords, [makeElem, makeDashes, spaceCharacters, guesses, replace]);
+gameConfig(gameWords, methodsArr);
