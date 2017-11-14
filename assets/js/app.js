@@ -191,7 +191,7 @@ const gameConfig = (words, methods) => {
 
     const [makeElem, makeDashes, spaceCharacters, guesses, replace, inc] = methods;
 
-    // target HTML elements necessary for rendering game details to the screen
+    // create and place elements into DOM
     const game = makeElem().addClass("game").appendTo(document.body);
     const winTotal = makeElem().addClass('.game__scores--wins').appendTo(game);
     const chancesLeftDiv = makeElem().addClass('.game__scores--chances-left').appendTo(game);
