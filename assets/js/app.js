@@ -216,7 +216,7 @@ const gameConfig = (words, methods) => {
 
     let puzzleWord = makeDashes(word);
 
-    let winsDiv = makeElem().addClass('wins').text('wins').appendTo(winTotal);
+    let winsDiv = makeElem().addClass('wins').text(`wins: ${wins}`).appendTo(winTotal);
     let chancesDiv = makeElem().text(`chances: ${chances}`).appendTo(chancesLeftDiv);
     let wrongGuessesDiv = makeElem().addClass('wrong-guesses').text(`No wrong guesses yet!`).appendTo(wrgGuessesDiv);
     let wordProgressDiv = makeElem()
