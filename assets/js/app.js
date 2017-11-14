@@ -187,13 +187,21 @@ const gameWords = HANGMAN.wordFactory(['one', 'compliment', 'deliberate', 'confi
 const {makeElem, makeDashes, spaceCharacters, guesses, replace, inc} = HANGMAN;
 const methodsArr = [makeElem, makeDashes, spaceCharacters, guesses, replace, inc];
 
-
 const gameConfig = (words, methods) => {
 
-    const body = document.body;
-
     const [makeElem, makeDashes, spaceCharacters, guesses, replace, inc] = methods;
+
+    // target HTML elements necessary for rendering game details to the screen
+    const game = makeElem().addClass("game").appendTo(document.body);
+    const winTotal = makeElem().addClass('.game__scores--wins').appendTo(game);
+    const chancesLeftDiv = makeElem().addClass('.game__scores--chances-left').appendTo(game);
+    const gameWordDiv = makeElem().addClass(".game__word").appendTo(game);
+    const wrgGuessesDiv = makeElem().addClass('.game__wrong-guesses').appendTo(game);
+
+    const body = document.body;
     
+    
+
     let input = [];
 
     let count = inc();
@@ -208,13 +216,13 @@ const gameConfig = (words, methods) => {
 
     let puzzleWord = makeDashes(word);
 
-    let winsDiv = makeElem().addClass('wins').text('wins').appendTo(body);
-    let chancesDiv = makeElem().addClass('chances-left').text(`chances: ${chances}`).appendTo(body);
-    let wrongGuessesDiv = makeElem().addClass('wrong-guesses').text(`No wrong guesses yet!`).appendTo(body);
+    let winsDiv = makeElem().addClass('wins').text('wins').appendTo(winTotal);
+    let chancesDiv = makeElem().text(`chances: ${chances}`).appendTo(chancesLeftDiv);
+    let wrongGuessesDiv = makeElem().addClass('wrong-guesses').text(`No wrong guesses yet!`).appendTo(wrgGuessesDiv);
     let wordProgressDiv = makeElem()
         .addClass("word-progress")
         .text(`word to solve ${spaceCharacters(puzzleWord)}`)
-        .appendTo(body);
+        .appendTo(gameWordDiv);
     
     let victory = false; 
 
@@ -267,7 +275,7 @@ const gameConfig = (words, methods) => {
         if (!words[count].isIncluded(key) && canIncScores === true && chances >= 1 && alphabetTestPast && !guessedLetters.includes(key)) {
             chances--;
             guessedLetters.push(key);
-            makeElem().text(key).appendTo(wrongGuessesDiv);
+            makeElem().addClass('chances-left').text(key).appendTo(wrongGuessesDiv);
         }
 
         // when chances have run out (LOSES)
