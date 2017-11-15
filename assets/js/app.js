@@ -193,8 +193,9 @@ const gameConfig = (words, methods) => {
 
     // create and place elements into DOM
     const game = makeElem().addClass("game").appendTo(document.body);
-    const winTotal = makeElem().addClass('.game__scores--wins').appendTo(game);
-    const chancesLeftDiv = makeElem().addClass('.game__scores--chances-left').appendTo(game);
+    const scoresDiv = makeElem().addClass("game__scores").appendTo(game);
+    const winTotal = makeElem().addClass('.game__scores--wins').appendTo(scoresDiv);
+    const chancesLeftDiv = makeElem().addClass('.game__scores--chances-left').appendTo(scoresDiv);
     const gameWordDiv = makeElem().addClass(".game__word").appendTo(game);
     const wrgGuessesDiv = makeElem().addClass('.game__wrong-guesses').appendTo(game);
 
@@ -220,8 +221,8 @@ const gameConfig = (words, methods) => {
     let chancesDiv = makeElem().text(`chances: ${chances}`).appendTo(chancesLeftDiv);
     let wrongGuessesDiv = makeElem().addClass('wrong-guesses').text(`No wrong guesses yet!`).appendTo(wrgGuessesDiv);
     let wordProgressDiv = makeElem()
-        .addClass("word-progress")
-        .text(`word to solve ${spaceCharacters(puzzleWord)}`)
+        .addClass("game__word-progress")
+        .text(spaceCharacters(puzzleWord))
         .appendTo(gameWordDiv);
     
     let victory = false; 
@@ -252,7 +253,7 @@ const gameConfig = (words, methods) => {
         chances = 5;      
         wins = 0;
         wordProgressDiv
-        .text(`Word so far: ${spaceCharacters(puzzleWord)}`); 
+        .text(spaceCharacters(puzzleWord)); 
         wrongGuessesDiv.empty();
     };
 
@@ -275,7 +276,7 @@ const gameConfig = (words, methods) => {
         if (!words[count].isIncluded(key) && canIncScores === true && chances >= 1 && alphabetTestPast && !guessedLetters.includes(key)) {
             chances--;
             guessedLetters.push(key);
-            makeElem().addClass('chances-left').text(key).appendTo(wrongGuessesDiv);
+            makeElem().addClass('game-scores__chances-left--word').text(key).appendTo(wrongGuessesDiv);
         }
 
         // when chances have run out (LOSES)
@@ -292,7 +293,7 @@ const gameConfig = (words, methods) => {
                 input = [];  
                 chances = 5;      
                 wordProgressDiv
-                .text(`Word so far: ${spaceCharacters(puzzleWord)}`); 
+                .text(spaceCharacters(puzzleWord)); 
             }
         } 
 
@@ -324,7 +325,7 @@ const gameConfig = (words, methods) => {
         
         chancesDiv.text(`chances: ${chances}`);
         wordProgressDiv
-            .text(`Word so far: ${spaceCharacters(puzzleWord)}`);
+            .text(spaceCharacters(puzzleWord));
     
     };
 };
