@@ -4,12 +4,15 @@
     "description": "",
     "main": "index.html",
     "scripts": {
-        "compile:sass": "node-sass assets/styles/scss/main.scss assets/styles/css/main.css --watch"
+        "compile:sass": "node-sass assets/styles/scss/main.scss assets/styles/css/main.css --watch",
+        "dev": "concurrently \"compile:sass\" \"live-server\""
     },
     "author": "Juan John-Charles",
     "license": "ISC",
     "dependencies": {},
     "devDependencies": {
+        "concurrently": "^3.5.0",
+        "live-server": "^1.2.0",
         "node-sass": "^4.5.3"
     }
 }
