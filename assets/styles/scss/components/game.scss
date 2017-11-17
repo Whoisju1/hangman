@@ -1,0 +1,23 @@
+.game {
+    height: calc(90vh - 3rem);
+    text-align: center;
+    &__score {
+        border: 1px dotted black;
+        float: left;
+        width: 20vw;
+        padding: 4rem 0;
+        &--wins,
+        &--chances {
+            font-family: $font-primary;
+            // text-decoration: underline;
+        }
+        // &--tally {
+        //     color: red;
+        //     font-size: 4rem;
+        // }
+    }
+}
+
+.game__score--tally {
+    color: $color-primary;
+}

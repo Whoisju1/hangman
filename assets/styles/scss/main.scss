@@ -8,7 +8,8 @@
 @import "base/typography";
 @import "base/utilities";
 // ============component=========
-// @import "components";
+@import "components/game";
+@import "components/intro";
 // ============header============
 @import "layout/header";
 @import "layout/grid";

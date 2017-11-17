@@ -63,7 +63,7 @@ const HANGMAN = {};
         (function looper (answer) {
             let [a, ...b] = [...answer];
 
-            dashed.push("_");
+            dashed.push("?");
             if (answer.length === 1) return;
             looper (b);
         })(answer);
@@ -130,16 +130,6 @@ const HANGMAN = {};
 
     HANGMAN.makeElem = makeElem;
 
-    // take a string as argument and return a string with spaces between every character of the original string
-
-    let spaceCharacters = (str) => {
-        let wordArr = [...str];
-        let dashedString = wordArr.join(" ");
-        return dashedString;
-    };
-
-    HANGMAN.spaceCharacters = spaceCharacters;
-
     // this takes in two arguments, the answer and the user's guess
     // if the letter guess is present in the answer it outputs an array of objects with the 
     // letter as a string and the index at which the letter is present in the answer string
@@ -184,18 +174,16 @@ const HANGMAN = {};
 
 
 const gameWords = HANGMAN.wordFactory(['one', 'compliment', 'deliberate', 'confidence', 'dynamic', 'javascript']);
-const {makeElem, makeDashes, spaceCharacters, guesses, replace, inc} = HANGMAN;
-const methodsArr = [makeElem, makeDashes, spaceCharacters, guesses, replace, inc];
+const {makeElem, makeDashes, guesses, replace, inc} = HANGMAN;
+const methodsArr = [makeElem, makeDashes, guesses, replace, inc];
 
 const gameConfig = (words, methods) => {
 
-    const [makeElem, makeDashes, spaceCharacters, guesses, replace, inc] = methods;
+    const [makeElem, makeDashes, guesses, replace, inc] = methods;
 
     // create and place elements into DOM
     const game = makeElem().addClass("game").appendTo(document.body);
-    const scoresDiv = makeElem().addClass("game__scores").appendTo(game);
-    const winTotal = makeElem().addClass('.game__scores--wins').appendTo(scoresDiv);
-    const chancesLeftDiv = makeElem().addClass('.game__scores--chances-left').appendTo(scoresDiv);
+    const scoreDiv = makeElem().addClass("game__score").appendTo(game);
     const gameWordDiv = makeElem().addClass(".game__word").appendTo(game);
     const wrgGuessesDiv = makeElem().addClass('.game__wrong-guesses').appendTo(game);
 
@@ -217,12 +205,12 @@ const gameConfig = (words, methods) => {
 
     let puzzleWord = makeDashes(word);
 
-    let winsDiv = makeElem().addClass('wins').text(`wins: ${wins}`).appendTo(winTotal);
-    let chancesDiv = makeElem().text(`chances: ${chances}`).appendTo(chancesLeftDiv);
-    let wrongGuessesDiv = makeElem().addClass('wrong-guesses').text(`No wrong guesses yet!`).appendTo(wrgGuessesDiv);
+    let winsDiv = makeElem().addClass('game__score--wins').html(`wins: <span class="game__score--tally">${wins}</span>`).appendTo(scoreDiv);
+    let chancesDiv = makeElem().addClass('game__score--chances').html(`chances: <span class="game__score--tally">${chances}</span>`).appendTo(scoreDiv);
+    let wrongGuessesDiv = makeElem().addClass('wrong-guesses').appendTo(wrgGuessesDiv);
     let wordProgressDiv = makeElem()
         .addClass("game__word-progress")
-        .text(spaceCharacters(puzzleWord))
+        .text(puzzleWord)
         .appendTo(gameWordDiv);
     
     let victory = false; 
@@ -238,7 +226,7 @@ const gameConfig = (words, methods) => {
         input = [];        
         chances = 5;
         wordProgressDiv
-        .text(`Word so far: ${spaceCharacters(puzzleWord)}`); 
+        .text(`Word so far: ${puzzleWord}`); 
         wrongGuessesDiv.empty();  
     };
 
@@ -253,7 +241,7 @@ const gameConfig = (words, methods) => {
         chances = 5;      
         wins = 0;
         wordProgressDiv
-        .text(spaceCharacters(puzzleWord)); 
+        .text(puzzleWord); 
         wrongGuessesDiv.empty();
     };
 
@@ -276,7 +264,7 @@ const gameConfig = (words, methods) => {
         if (!words[count].isIncluded(key) && canIncScores === true && chances >= 1 && alphabetTestPast && !guessedLetters.includes(key)) {
             chances--;
             guessedLetters.push(key);
-            makeElem().addClass('game-scores__chances-left--word').text(key).appendTo(wrongGuessesDiv);
+            makeElem().addClass('wrong-letter').text(key).appendTo(wrongGuessesDiv);
         }
 
         // when chances have run out (LOSES)
@@ -293,7 +281,7 @@ const gameConfig = (words, methods) => {
                 input = [];  
                 chances = 5;      
                 wordProgressDiv
-                .text(spaceCharacters(puzzleWord)); 
+                .text(puzzleWord); 
             }
         } 
 
@@ -306,9 +294,9 @@ const gameConfig = (words, methods) => {
         if (words[count].isMatched(puzzleWord)) {
             if (canIncScores) wins++;
             canIncScores = false;
-            winsDiv.text(`wins: ${wins}`);
+            winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
             wordProgressDiv
-            .text(`Word so far: ${spaceCharacters(puzzleWord)}`);
+            .text(`Word so far: ${puzzleWord}`);
 
             // move to next word when the user presses enter
             if (key === "Enter") {
@@ -323,11 +311,27 @@ const gameConfig = (words, methods) => {
             }
         }
         
-        chancesDiv.text(`chances: ${chances}`);
+        chancesDiv.html(`chances: <span class="game__score--tally">${chances}</span>`);
         wordProgressDiv
-            .text(spaceCharacters(puzzleWord));
+            .text(puzzleWord);
     
     };
 };
 
-gameConfig(gameWords, methodsArr);
+// =================== EVENT HANDLER FOR STARTING GAME=======================
+const handleKeypress = (e) => {
+    const {key, target} = e;
+
+    const intro = document.querySelector('.intro')
+    
+    if (key === 'Enter') {
+        gameConfig(gameWords, methodsArr);
+        intro.classList.add('intro--remove');
+    }
+    target.removeEventListener('keypress', handleKeypress);
+
+};
+
+document.body.addEventListener("keypress", handleKeypress);
+
+

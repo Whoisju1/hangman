@@ -1,0 +1,14 @@
+.header {
+    background-color: $color-primary;
+    height: 7rem;
+    border-radius: 4px;
+    color: #fff;
+    font-family: $font-primary;
+    display: flex;
+    padding-left: 4rem;
+    align-items: center;
+    margin-bottom: 2rem;
+    &__logo {
+        font-size: 4.5rem;
+    }
+}

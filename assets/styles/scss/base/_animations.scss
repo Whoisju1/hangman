@@ -1,0 +1,31 @@
+@keyframes wrong-word {
+    0% {
+        transform: translateY(5rem);
+        opacity: 0;
+    }
+    80% {
+        transform: translateY(-2rem);
+    }
+    100% {
+        transform: translateY(1rem);
+        opacity: 1;
+    }
+}
+
+@keyframes floating {
+    0% {
+        transform: translateY(.5rem);
+    }
+    100% {
+        transform: translateY(-.5rem);
+    }
+}
+
+@keyframes blinking {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

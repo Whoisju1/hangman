@@ -1,0 +1,135 @@
+@import url("https://fonts.googleapis.com/css?family=Bungee+Inline");
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+html {
+  font-size: 62.5%; }
+
+body {
+  font-family: "Lato", 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1.6rem;
+  padding: 3rem;
+  box-sizing: border-box; }
+
+@keyframes wrong-word {
+  0% {
+    transform: translateY(5rem);
+    opacity: 0; }
+  80% {
+    transform: translateY(-2rem); }
+  100% {
+    transform: translateY(1rem);
+    opacity: 1; } }
+
+@keyframes floating {
+  0% {
+    transform: translateY(0.5rem); }
+  100% {
+    transform: translateY(-0.5rem); } }
+
+@keyframes blinking {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+.wrong-letter {
+  display: inline-block;
+  font-size: 15rem;
+  transform: scale(2);
+  text-transform: uppercase;
+  text-shadow: 4px 3px 9px #969696;
+  margin: 2.5rem;
+  animation: wrong-word;
+  animation-duration: .5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  text-decoration-line: line-through;
+  text-decoration-color: black;
+  font-family: "Bungee Inline", cursive;
+  line-height: 12rem;
+  color: #e74c3c;
+  box-shadow: 4px 8px 29px rgba(150, 150, 150, 0.2);
+  padding: 2%;
+  border-radius: 100px; }
+
+.game__word-progress {
+  text-align: center;
+  display: inline-block;
+  background-image: linear-gradient(to right, gold, #90ee90);
+  background-color: transparent;
+  color: transparent;
+  font-family: 'Bungee Inline', cursive;
+  background-clip: text;
+  -webkit-background-clip: text;
+  border: 0.4px solid #2ecc71;
+  letter-spacing: 3rem;
+  text-transform: uppercase;
+  box-shadow: 4px 8px 29px rgba(150, 150, 150, 0.2);
+  font-size: 10rem;
+  flex-flow: nowrap;
+  padding: .5rem 1rem;
+  transition: all .5;
+  border-radius: 10px;
+  animation-name: floating;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-duration: 1.5s;
+  animation-play-state: running;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out; }
+
+.game__word .game__wrong-guesses {
+  border: 1px solid black;
+  background: red; }
+
+.game {
+  height: calc(90vh - 3rem);
+  text-align: center; }
+  .game__score {
+    border: 1px dotted black;
+    float: left;
+    width: 20vw;
+    padding: 4rem 0; }
+    .game__score--wins, .game__score--chances {
+      font-family: "Bungee Inline", cursive; }
+
+.game__score--tally {
+  color: #2ecc71; }
+
+.intro {
+  animation-name: blinking;
+  animation-iteration-count: infinite;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+  font-size: 8rem;
+  text-transform: uppercase;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  color: #2ecc71; }
+  .intro--text {
+    color: yellowgreen;
+    text-shadow: 5px 15px 10px black, 0.4; }
+  .intro--remove {
+    opacity: 0;
+    visibility: hidden; }
+
+.header {
+  background-color: #2ecc71;
+  height: 7rem;
+  border-radius: 4px;
+  color: #fff;
+  font-family: "Bungee Inline", cursive;
+  display: flex;
+  padding-left: 4rem;
+  align-items: center;
+  margin-bottom: 2rem; }
+  .header__logo {
+    font-size: 4.5rem; }

@@ -1,0 +1,23 @@
+.intro {
+    animation-name: blinking;
+    animation-iteration-count: infinite;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+    font-size: 8rem;
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    // color: gray;
+    color: $color-primary;
+    &--text {
+        color: yellowgreen;
+        text-shadow: 5px 15px 10px black, 0.4;
+    }
+    &--remove {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
