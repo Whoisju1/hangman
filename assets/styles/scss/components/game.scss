@@ -11,13 +11,10 @@
             font-family: $font-primary;
             // text-decoration: underline;
         }
-        // &--tally {
-        //     color: red;
-        //     font-size: 4rem;
-        // }
     }
 }
 
 .game__score--tally {
     color: $color-primary;
+    font-size: 3rem;
 }

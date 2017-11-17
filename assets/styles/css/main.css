@@ -99,7 +99,8 @@ body {
       font-family: "Bungee Inline", cursive; }
 
 .game__score--tally {
-  color: #2ecc71; }
+  color: #2ecc71;
+  font-size: 3rem; }
 
 .intro {
   animation-name: blinking;
