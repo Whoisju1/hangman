@@ -135,7 +135,11 @@ const HANGMAN = {};
     // letter as a string and the index at which the letter is present in the answer string
     let guesses = (answer, letterGuessed) =>{
         return (
+            // spread the characters in the string and place them in an array 
+            // then iterate through them using the reduce function which returns a array that contains 
+            // all the letter guessed and the the index at which it is matched in the answers string
             [...answer].reduce((arr, letter, index) => { 
+
                 if (letterGuessed === letter) {
                     let obj = {
                         key: letterGuessed,
@@ -189,9 +193,14 @@ const gameConfig = (words, methods) => {
 
     const body = document.body;
     
-    
+    // set initial values for game
 
     let input = [];
+
+    // this sets the count to zero
+    // the inc function returns zero when it is passed no arguments 
+    // otherwise it takes a number as an argument and turns that number incremented by 1
+    // inc(5) is 5 + 1, which returns 6.
 
     let count = inc();
     
@@ -205,6 +214,7 @@ const gameConfig = (words, methods) => {
 
     let puzzleWord = makeDashes(word);
 
+    // ############ SETTING INITIAL DOM ELEMENTS ###############
     let winsDiv = makeElem().addClass('game__score--wins').html(`wins: <span class="game__score--tally">${wins}</span>`).appendTo(scoreDiv);
     let chancesDiv = makeElem().addClass('game__score--chances').html(`chances: <span class="game__score--tally">${chances}</span>`).appendTo(scoreDiv);
     let wrongGuessesDiv = makeElem().addClass('wrong-guesses').appendTo(wrgGuessesDiv);
@@ -213,7 +223,7 @@ const gameConfig = (words, methods) => {
         .text(puzzleWord)
         .appendTo(gameWordDiv);
     
-    let victory = false; 
+    // let victory = false; // ~~~~~~~~ NO USE YET ~~~~~~~~~
 
     let canIncScores = true;
     let acknowledgeGuesses = true;
@@ -230,8 +240,9 @@ const gameConfig = (words, methods) => {
         wrongGuessesDiv.empty();  
     };
 
+    // RESTARTS GAME -- STARTS FROM THE BEGINNING
     const hardReset = () => {
-        alert('Congratulations you have found all the words');
+        alert('Congratulations you have found all the words'); // TODO: this will be replaced
         guessedLetters = [];
         canIncScores = true;
         count = inc();
@@ -245,11 +256,17 @@ const gameConfig = (words, methods) => {
         wrongGuessesDiv.empty();
     };
 
+    // COMMENCE GAME WHEN USER PRESSES THE ENTER KEY
     body.onkeyup = (e) => {
         const isAlphabet = str => /^[a-zA-Z()]$/.test(str);
           
+        // capture key stroke
         let {key} = e;
+
+        // if key is a letter turn it to lower case and reassign it to back to key
         if (isAlphabet(key)) key = key.toLowerCase();
+
+        // 
         let userGuess = guesses(word, key);
 
         // this function tests the key entered to find out if it is an alphabetical character 
@@ -260,14 +277,14 @@ const gameConfig = (words, methods) => {
         
         puzzleWord = replace(puzzleWord, input);
 
-        // if user guesses wrong
+        // ############## USER GUESSED WRONG #############
         if (!words[count].isIncluded(key) && canIncScores === true && chances >= 1 && alphabetTestPast && !guessedLetters.includes(key)) {
             chances--;
             guessedLetters.push(key);
             makeElem().addClass('wrong-letter').text(key).appendTo(wrongGuessesDiv);
         }
 
-        // when chances have run out (LOSES)
+        // ########## USER EXHAUSTS ALL HIS GUESSES ##############
         if(!chances) {
             acknowledgeGuesses = false;
             // alert('You lost!');
@@ -290,7 +307,7 @@ const gameConfig = (words, methods) => {
         //     alert('VICTORY!!!!!');
         // }
         
-        // when the user gets guesses all the letters in the word
+        // ################ USER GOT ALL THE LETTERS ###############
         if (words[count].isMatched(puzzleWord)) {
             if (canIncScores) wins++;
             canIncScores = false;
@@ -328,6 +345,8 @@ const handleKeypress = (e) => {
         gameConfig(gameWords, methodsArr);
         intro.classList.add('intro--remove');
     }
+    
+    // remove listener so that this function is only run once, when the user initially comes to the site
     target.removeEventListener('keypress', handleKeypress);
 
 };
