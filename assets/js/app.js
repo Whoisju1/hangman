@@ -214,15 +214,26 @@ const gameConfig = (words, methods) => {
 
     let puzzleWord = makeDashes(word);
 
+    let isModalOpen = false;
+
+    const toggleModal = (elem) => {
+        (isModalOpen) ? elem.addClass('.modal__backdrop') : elem.removeClass('modal__backdrop')
+    };
+
+    
     // ############ SETTING INITIAL DOM ELEMENTS ###############
     let winsDiv = makeElem().addClass('game__score--wins').html(`wins: <span class="game__score--tally">${wins}</span>`).appendTo(scoreDiv);
     let chancesDiv = makeElem().addClass('game__score--chances').html(`chances: <span class="game__score--tally">${chances}</span>`).appendTo(scoreDiv);
     let wrongGuessesDiv = makeElem().addClass('wrong-guesses').appendTo(wrgGuessesDiv);
     let wordProgressDiv = makeElem()
-        .addClass("game__word-progress")
-        .text(puzzleWord)
-        .appendTo(gameWordDiv);
+    .addClass("game__word-progress")
+    .text(puzzleWord)
+    .appendTo(gameWordDiv);
     
+    const modalBackdrop = makeElem().addClass('modal__backdrop').hide().appendTo(body);
+    const modal = makeElem().addClass('modal').appendTo(modalBackdrop);
+    // const modalWordDisplay = makeElem('h1').addClass('modal--word').appendTo(modal);
+    const modalMessage = makeElem().addClass('modal--message').appendTo(modal);
     // let victory = false; // ~~~~~~~~ NO USE YET ~~~~~~~~~
 
     let canIncScores = true;
@@ -314,15 +325,23 @@ const gameConfig = (words, methods) => {
             winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
             wordProgressDiv
             .text(`Word so far: ${puzzleWord}`);
+            
+            // modalWordDisplay.text(puzzleWord);
+            modalMessage.html(`<span class="modal--congrats">Congratulations!</span> 
+                <br> 
+                You're correct. The word's <span class="modal--notable">"${puzzleWord}"</span>
+                <br>
+                Press <span class="modal--notable">"Enter"</span> to attempt the next word.`);
+            modalBackdrop.show();
 
             // move to next word when the user presses enter
             if (key === "Enter") {
                 canIncScores = true;
-
                 // ###### USER GOT ALL THE WORDS ########
                 if (words[count] !== words[words.length-1]) {
                     //  to next word and reset negative record regarding eat individual word
                     softReset();
+                    modalBackdrop.hide();
                 } else {
                     // the game resets when all the words have been solved
                    hardReset();
@@ -346,10 +365,11 @@ const handleKeypress = (e) => {
     if (key === 'Enter') {
         gameConfig(gameWords, methodsArr);
         intro.classList.add('intro--remove');
+
+        // remove listener so that this function is only run once, when the user initially comes to the site
+        target.removeEventListener('keypress', handleKeypress);
     }
     
-    // remove listener so that this function is only run once, when the user initially comes to the site
-    target.removeEventListener('keypress', handleKeypress);
 
 };
 

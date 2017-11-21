@@ -18,3 +18,44 @@
     color: $color-primary;
     font-size: 3rem;
 }
+
+.modal {
+    display: flex;
+    padding: 5%;
+    width: 50%;
+    justify-content: space-around;
+    flex-flow: column;
+    height: auto;
+    background-color: #ffffff;
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    border-radius: 4px;
+    &--notable {
+        font-weight: bolder;
+        color: green;
+    }
+    &--message {
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: 400;
+    }
+    &--congrats {
+        font-weight: bolder;
+        color: green;
+        font-size: 400%;
+        font-weight: bolder;
+    }
+    &__backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 20;
+        background-color: #000000;
+        background-color: rgba(0, 0, 0, .7);
+    }
+}
