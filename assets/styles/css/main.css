@@ -116,18 +116,26 @@ body {
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   border-radius: 4px; }
-  .modal--notable {
+  .modal__notable--win {
     font-weight: bolder;
     color: green; }
+  .modal__notable--loss {
+    font-weight: bolder;
+    color: red; }
   .modal--message {
     text-transform: uppercase;
     text-align: center;
     font-weight: 400; }
-  .modal--congrats {
+  .modal__heading--win {
     font-weight: bolder;
-    color: green;
     font-size: 400%;
-    font-weight: bolder; }
+    font-weight: bolder;
+    color: green; }
+  .modal__heading--loss {
+    font-weight: bolder;
+    font-size: 400%;
+    font-weight: bolder;
+    color: red; }
   .modal__backdrop {
     position: fixed;
     top: 0;

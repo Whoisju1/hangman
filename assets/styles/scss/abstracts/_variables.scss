@@ -4,3 +4,10 @@ cursive;
 $color-primary: #2ecc71;
 $font-primary: 'Bungee Inline',
 cursive;
+// === ======MIXINS=============
+@mixin win-or-lose($color) {
+    font-weight: bolder;
+    font-size: 400%;
+    font-weight: bolder;
+    color: $color;
+}

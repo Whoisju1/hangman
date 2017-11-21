@@ -300,8 +300,15 @@ const gameConfig = (words, methods) => {
             acknowledgeGuesses = false;
             // alert('You lost!');
             // count = inc();
+            modalMessage.html(`<span class="modal__heading--loss">You lose!</span> 
+            <br> 
+            The word was <span class="modal__notable--loss">"${words[count].word}"</span>
+            <br>
+            Press <span class="modal__notable--loss">"Enter"</span> to start over.`);
+        modalBackdrop.show();
             if (key === "Enter") {
                 count = inc();
+                modalBackdrop.hide();
                 wrongGuessesDiv.empty();
                 acknowledgeGuesses = true;
                 word = words[count].word;
@@ -327,11 +334,11 @@ const gameConfig = (words, methods) => {
             .text(`Word so far: ${puzzleWord}`);
             
             // modalWordDisplay.text(puzzleWord);
-            modalMessage.html(`<span class="modal--congrats">Congratulations!</span> 
+            modalMessage.html(`<span class="modal__heading--win">Congratulations!</span> 
                 <br> 
-                You're correct. The word's <span class="modal--notable">"${puzzleWord}"</span>
+                You're correct. The word's <span class="modal__notable--win">"${puzzleWord}"</span>
                 <br>
-                Press <span class="modal--notable">"Enter"</span> to attempt the next word.`);
+                Press <span class="modal__notable--win">"Enter"</span> to attempt the next word.`);
             modalBackdrop.show();
 
             // move to next word when the user presses enter

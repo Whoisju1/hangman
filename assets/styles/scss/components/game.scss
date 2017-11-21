@@ -33,20 +33,28 @@
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
     border-radius: 4px;
-    &--notable {
-        font-weight: bolder;
-        color: green;
+    &__notable {
+        &--win {
+            font-weight: bolder;
+            color: green;
+        }
+        &--loss {
+            font-weight: bolder;
+            color: red;
+        }
     }
     &--message {
         text-transform: uppercase;
         text-align: center;
         font-weight: 400;
     }
-    &--congrats {
-        font-weight: bolder;
-        color: green;
-        font-size: 400%;
-        font-weight: bolder;
+    &__heading {
+        &--win {
+            @include win-or-lose(green);
+        }
+        &--loss {
+            @include win-or-lose(red);
+        }
     }
     &__backdrop {
         position: fixed;
