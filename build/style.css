@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Bungee+Inline");
-*,
+@import url(https://fonts.googleapis.com/css?family=Bungee+Inline);*,
 *::after,
 *::before {
   margin: 0;
@@ -109,7 +108,7 @@ body {
   justify-content: space-around;
   flex-flow: column;
   height: auto;
-  background-color: #ffffff;
+  background: #ffffff;
   z-index: 2;
   position: absolute;
   top: 50%;
@@ -130,7 +129,9 @@ body {
     font-weight: bolder;
     font-size: 400%;
     font-weight: bolder;
-    color: green; }
+    color: transparent;
+    -webkit-background-clip: text;
+    background-image: linear-gradient(to right, gold, #90ee90); }
   .modal__heading--loss {
     font-weight: bolder;
     font-size: 400%;
@@ -167,7 +168,6 @@ body {
     visibility: hidden; }
 
 .header {
-  background-color: #2ecc71;
   height: 7rem;
   border-radius: 4px;
   color: #fff;
@@ -175,6 +175,7 @@ body {
   display: flex;
   padding-left: 4rem;
   align-items: center;
-  margin-bottom: 2rem; }
+  margin-bottom: 2rem;
+  background-image: linear-gradient(to right, gold, #90ee90); }
   .header__logo {
     font-size: 4.5rem; }

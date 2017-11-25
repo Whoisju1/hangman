@@ -26,7 +26,7 @@
     justify-content: space-around;
     flex-flow: column;
     height: auto;
-    background-color: #ffffff;
+    background: #ffffff;
     z-index: 2;
     position: absolute;
     top: 50%;
@@ -50,7 +50,10 @@
     }
     &__heading {
         &--win {
-            @include win-or-lose(green);
+            @include win-or-lose(transparent);
+            -webkit-background-clip: text;
+            background-image: linear-gradient(to right, gold, #90ee90);
+            // text-shadow: 4px 10px 10px rgba(0, 0, 0, .7);
         }
         &--loss {
             @include win-or-lose(red);

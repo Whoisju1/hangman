@@ -1,4 +1,6 @@
 "use strict";
+//import styles
+import './style/main.scss';
 
 const HANGMAN = {};
 
