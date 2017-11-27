@@ -184,6 +184,15 @@ const { makeElem, makeDashes, guesses, replace, inc } = HANGMAN;
 const methodsArr = [makeElem, makeDashes, guesses, replace, inc];
 
 const gameConfig = (words, methods) => {
+
+    const wrapQuestMark = (word) => {
+        const wordArr = [...word].map((letter) => {
+            if (letter === '?') return `<span class="game__word-progress--unsolved">${letter}</span>`;
+            return letter;
+        });
+        return wordArr.join('');
+    };
+    
 	const [makeElem, makeDashes, guesses, replace, inc] = methods;
 
 	// create and place elements into DOM
@@ -221,13 +230,7 @@ const gameConfig = (words, methods) => {
 
 	let guessedLetters = [];
 
-	let puzzleWord = makeDashes(word);
-
-	let isModalOpen = false;
-
-	const toggleModal = elem => {
-		isModalOpen ? elem.addClass('.modal__backdrop') : elem.removeClass('modal__backdrop');
-	};
+    let puzzleWord = makeDashes(word);
 
 	// ############ SETTING INITIAL DOM ELEMENTS ###############
 	let winsDiv = makeElem()
@@ -243,7 +246,7 @@ const gameConfig = (words, methods) => {
 		.appendTo(wrgGuessesDiv);
 	let wordProgressDiv = makeElem()
 		.addClass('game__word-progress')
-		.text(puzzleWord)
+		.html(wrapQuestMark(puzzleWord))
 		.appendTo(gameWordDiv);
 
 	const modalBackdrop = makeElem()
@@ -283,7 +286,7 @@ const gameConfig = (words, methods) => {
 		input = [];
 		chances = 5;
 		wins = 0;
-		wordProgressDiv.text(puzzleWord);
+		wordProgressDiv.html(wrapQuestMark(puzzleWord));
 		wrongGuessesDiv.empty();
 	};
 
@@ -306,8 +309,8 @@ const gameConfig = (words, methods) => {
 		// spread array and push them into the input array
 		if (acknowledgeGuesses) input.push(...userGuess);
 
-		puzzleWord = replace(puzzleWord, input);
-
+        puzzleWord = replace(puzzleWord, input);
+        
 		// ############## USER GUESSED WRONG #############
 		if (
 			!words[count].isIncluded(key) &&
@@ -344,7 +347,7 @@ const gameConfig = (words, methods) => {
 				puzzleWord = makeDashes(word);
 				input = [];
 				chances = 5;
-				wordProgressDiv.text(puzzleWord);
+				wordProgressDiv.html(wrapQuestMark(puzzleWord));
 			}
 		}
 
@@ -387,7 +390,7 @@ const gameConfig = (words, methods) => {
 		}
 
 		chancesDiv.html(`chances: <span class="game__score--tally">${chances}</span>`);
-		wordProgressDiv.text(puzzleWord);
+		wordProgressDiv.html(wrapQuestMark(puzzleWord));
 	};
 };
 
