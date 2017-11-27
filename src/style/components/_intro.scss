@@ -10,8 +10,8 @@
     top: 50%;
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
-    // color: gray;
     color: $color-primary;
+    text-align: center;
     &--text {
         color: yellowgreen;
         text-shadow: 5px 15px 10px black, 0.4;
