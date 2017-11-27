@@ -287,7 +287,8 @@ const gameConfig = (words, methods) => {
 		chances = 5;
 		wins = 0;
 		wordProgressDiv.html(wrapQuestMark(puzzleWord));
-		wrongGuessesDiv.empty();
+        wrongGuessesDiv.empty();
+        console.log('wins: ', wins);
 	};
 
 	// COMMENCE GAME WHEN USER PRESSES THE ENTER KEY
@@ -389,7 +390,8 @@ const gameConfig = (words, methods) => {
 			}
 		}
 
-		chancesDiv.html(`chances: <span class="game__score--tally">${chances}</span>`);
+        chancesDiv.html(`chances: <span class="game__score--tally">${chances}</span>`);
+        winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
 		wordProgressDiv.html(wrapQuestMark(puzzleWord));
 	};
 };
