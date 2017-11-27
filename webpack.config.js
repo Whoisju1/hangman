@@ -6,7 +6,8 @@ module.exports = {
 	entry: './src/app.js',
 	output: {
 		filename: 'app.js',
-		path: path.resolve(__dirname, 'build')
+		path: path.resolve(__dirname, 'build'),
+		publicPath: "https://whoisju1.github.io/hangman/"
 	},
 	module: {
 		rules: [
