@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "webpack-dev-server",
+        "deploy": "gh-pages -d build",
         "build": "webpack --progress --color"
     },
     "repository": "https://github.com/Whoisju1/Hangman-Game.git",
@@ -16,6 +17,7 @@
         "babel-preset-es2017": "^6.24.1",
         "css-loader": "^0.28.7",
         "extract-text-webpack-plugin": "^3.0.2",
+        "gh-pages": "^1.1.0",
         "html-webpack-plugin": "^2.30.1",
         "node-sass": "^4.7.2",
         "sass-loader": "^6.0.6",
