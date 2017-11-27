@@ -341,6 +341,7 @@ const gameConfig = (words, methods) => {
 			modalBackdrop.show();
 			if (key === 'Enter') {
 				count = inc();
+				wins = inc();
 				modalBackdrop.hide();
 				wrongGuessesDiv.empty();
 				acknowledgeGuesses = true;
@@ -349,6 +350,7 @@ const gameConfig = (words, methods) => {
 				input = [];
 				chances = 5;
 				wordProgressDiv.html(wrapQuestMark(puzzleWord));
+				winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
 			}
 		}
 
