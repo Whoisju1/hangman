@@ -4,7 +4,7 @@
     "description": "The name speaks for itself. Guess the words and if you have enough wrong guesses you lose. ",
     "main": "index.js",
     "scripts": {
-        "start": "webpack-dev-server --open --colors",
+        "start": "webpack-dev-server --open --progress --colors",
         "deploy": "gh-pages -d build",
         "build": "webpack --progress --colors"
     },

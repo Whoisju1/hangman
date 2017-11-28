@@ -6,12 +6,9 @@ module.exports = {
 	entry: './src/app.js',
 	output: {
 		filename: 'app.js',
-		path: path.resolve(__dirname, 'build'),
+		path: path.resolve(__dirname, 'docs'),
 		// publicPath: "https://whoisju1.github.io/hangman/"
 	},
-	// devServer: {
-	// 	publicPath: "/"
-	// },
 	module: {
 		rules: [
 			{ test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
@@ -28,7 +25,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: path.resolve(__dirname, './src/index.html')
 		}),
-		new ExtractTextPlugin('style.css')
+		new ExtractTextPlugin('style.css'),
 	],
 	devtool: 'cheap-module-eval-source-map'
 };
