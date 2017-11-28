@@ -154,7 +154,6 @@ body {
 .modal {
   display: flex;
   padding: 5%;
-  width: 50%;
   justify-content: space-around;
   flex-flow: column;
   height: auto;
