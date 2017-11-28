@@ -4,9 +4,9 @@
     "description": "The name speaks for itself. Guess the words and if you have enough wrong guesses you lose. ",
     "main": "index.js",
     "scripts": {
-        "start": "webpack-dev-server --open",
+        "start": "webpack-dev-server --open --colors",
         "deploy": "gh-pages -d build",
-        "build": "webpack --progress --color"
+        "build": "webpack --progress --colors"
     },
     "repository": "https://github.com/Whoisju1/Hangman-Game.git",
     "author": "Juan John-Charles <whoisju1@gmail.com>",

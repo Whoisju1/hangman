@@ -35,7 +35,6 @@
             @include win-or-lose(transparent);
             -webkit-background-clip: text;
             background-image: linear-gradient(to right, gold, #90ee90);
-            // text-shadow: 4px 10px 10px rgba(0, 0, 0, .7);
         }
         &--loss {
             @include win-or-lose(red);

@@ -7,11 +7,11 @@ module.exports = {
 	output: {
 		filename: 'app.js',
 		path: path.resolve(__dirname, 'build'),
-		publicPath: "https://whoisju1.github.io/hangman/"
+		// publicPath: "https://whoisju1.github.io/hangman/"
 	},
-	devServer: {
-		publicPath: "/"
-	},
+	// devServer: {
+	// 	publicPath: "/"
+	// },
 	module: {
 		rules: [
 			{ test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },

@@ -13,7 +13,8 @@
     color: $color-primary;
     text-align: center;
     &--text {
-        color: yellowgreen;
+        // color: yellowgreen; 
+        @include gradient-text;
         text-shadow: 5px 15px 10px black, 0.4;
     }
     &--remove {
