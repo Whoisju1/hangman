@@ -13,7 +13,7 @@ body {
   font-size: 1.6rem;
   padding: 3rem;
   box-sizing: border-box;
-  background-image: linear-gradient(to left, #fff9f9, #ffffff); }
+  background-image: linear-gradient(to left, #d3d3d3, #ffffff); }
 
 @keyframes wrong-word {
   0% {
@@ -154,7 +154,6 @@ body {
 .modal {
   display: flex;
   padding: 5%;
-  width: 50%;
   justify-content: space-around;
   flex-flow: column;
   height: auto;
