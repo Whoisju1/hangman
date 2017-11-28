@@ -5,3 +5,9 @@
         clear: both;
     }
 }
+
+@mixin gradient-text {
+    background-image: linear-gradient(to right, gold, #90ee90);
+    color: transparent;
+    -webkit-background-clip: text;
+}
