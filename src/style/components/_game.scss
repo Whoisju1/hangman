@@ -2,10 +2,22 @@
     height: calc(90vh - 3rem);
     text-align: center;
     &__score {
+        position: relative;
+        background-color: rgba(231, 222, 222, 0.4);
         border: 1px dotted black;
         float: left;
         width: 20vw;
         padding: 4rem 0;
+        &::after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            background: $gradient-primary;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
         &--wins,
         &--chances {
             font-family: $font-primary;
