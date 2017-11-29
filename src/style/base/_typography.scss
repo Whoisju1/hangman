@@ -3,6 +3,7 @@
 .wrong-letter {
     display: inline-block;
     font-size: 15rem;
+    grid-column: 3 auto;
     transform: scale(2);
     text-transform: uppercase;
     text-shadow: 4px 3px 9px rgba(150, 150, 150, 1);
@@ -31,43 +32,5 @@
         left: 0;
         height: 100%;
         width: 100%;
-    }
-}
-
-.game__word {
-    &-progress {
-        text-align: center;
-        display: inline-block;
-        @include gradient-text;
-        background-color: transparent;
-        font-family: 'Bungee Inline', cursive;
-        background-clip: text;
-        letter-spacing: 3rem;
-        text-transform: uppercase;
-        // box-shadow: 4px 8px 29px rgba(150, 150, 150, 0.2);
-        font-size: 10rem;
-        flex-flow: nowrap;
-        padding: .5rem 1rem;
-        transition: all .5;
-        // border-radius: 10px;
-        animation-name: floating;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
-        animation-duration: 1.5s;
-        animation-play-state: running;
-        animation-fill-mode: both;
-        animation-timing-function: ease-in-out;
-        &--unsolved {
-            font-family: $Abril;
-            padding: 0;
-            // color: #f05630;
-            color: green;
-            display: inline-block;
-            text-shadow: 7px 6px 14px rgba(0, 0, 0, .4);
-        }
-    }
-    .game__wrong-guesses {
-        border: 1px solid black;
-        background: red;
     }
 }

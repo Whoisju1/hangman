@@ -4,13 +4,8 @@ cursive;
 $Abril: 'Abril Fatface',
 cursive;
 $color-primary: #2ecc71;
-$gradient-primary: linear-gradient(to right, gold, #90ee90);
 $font-primary: 'Bungee Inline',
 cursive;
+//=============== GRID COL ============
+$col-12-grid: repeat(12, 1fr);
 // === ======MIXINS=============
-@mixin win-or-lose($color) {
-    font-weight: bolder;
-    font-size: 400%;
-    font-weight: bolder;
-    color: $color;
-}

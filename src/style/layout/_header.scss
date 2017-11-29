@@ -1,15 +1,18 @@
 .header {
     // background-color: $color-primary;
-    height: 7rem;
+    display: grid;
+    grid-template-columns: $col-12-grid;
+    height: 10rem;
     border-radius: 4px;
     color: #fff;
     font-family: $font-primary;
-    display: flex;
     padding-left: 4rem;
-    align-items: center;
     margin-bottom: 2rem;
-    background-image: linear-gradient(to right, gold, #90ee90);
+    // @include gradient-primary;
     &__logo {
-        font-size: 4.5rem;
+        grid-column: 2;
+        font-size: 9.5rem;
+        line-height: 10.5rem;
+        @include gradient-text;
     }
 }

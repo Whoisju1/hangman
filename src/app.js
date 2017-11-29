@@ -187,7 +187,7 @@ const gameConfig = (words, methods) => {
 
     const wrapQuestMark = (word) => {
         const wordArr = [...word].map((letter) => {
-            if (letter === '?') return `<span class="game__word-progress--unsolved">${letter}</span>`;
+            if (letter === '?') return `<span class="game__word--progress--unsolved">${letter}</span>`;
             return letter;
         });
         return wordArr.join('');
@@ -203,10 +203,10 @@ const gameConfig = (words, methods) => {
 		.addClass('game__score')
 		.appendTo(game);
 	const gameWordDiv = makeElem()
-		.addClass('.game__word')
+		.addClass('game__word')
 		.appendTo(game);
 	const wrgGuessesDiv = makeElem()
-		.addClass('.game__wrong-guesses')
+		.addClass('game__wrong-guesses')
 		.appendTo(game);
 
 	const body = document.body;
@@ -245,7 +245,7 @@ const gameConfig = (words, methods) => {
 		.addClass('wrong-guesses')
 		.appendTo(wrgGuessesDiv);
 	let wordProgressDiv = makeElem()
-		.addClass('game__word-progress')
+		.addClass('game__word--progress')
 		.html(wrapQuestMark(puzzleWord))
 		.appendTo(gameWordDiv);
 

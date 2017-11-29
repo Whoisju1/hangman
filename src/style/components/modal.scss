@@ -4,7 +4,8 @@
     justify-content: space-around;
     flex-flow: column;
     height: auto;
-    background: #ffffff;
+    @include gradient-primary;
+    text-shadow: 3px 3px 14px rgba(0, 0, 0, .2);
     z-index: 2;
     position: absolute;
     top: 50%;
@@ -21,7 +22,7 @@
         }
         &--loss {
             font-weight: bolder;
-            color: red;
+            color: #e74c3c;
         }
     }
     &--message {
@@ -31,12 +32,11 @@
     }
     &__heading {
         &--win {
-            @include win-or-lose(transparent);
+            @include win-or-lose(#27ae60);
             -webkit-background-clip: text;
-            background-image: linear-gradient(to right, gold, #90ee90);
         }
         &--loss {
-            @include win-or-lose(red);
+            @include win-or-lose(#e74c3c);
         }
     }
     &__backdrop {
