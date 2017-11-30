@@ -9,9 +9,9 @@ const HANGMAN = {};
 	// -----------------------WORD CLASS------------------------
 	// used to make words for game
 	class Word {
-		constructor(word) {
+		constructor(word, hint) {
 			this.word = word.toLowerCase();
-
+			this.hint = hint;
 			this.isMatched = this.isMatched.bind(this);
 			this.isIncluded = this.isIncluded.bind(this);
 		}
@@ -32,14 +32,15 @@ const HANGMAN = {};
 	// it takes an a single string, multiple stings, or an array of stings as an argument
 	HANGMAN.wordFactory = (...word) => {
 		// if argument is an array make it an array by destructuring it
+		console.log(word);
 		if (Array.isArray(...word)) [word] = word;
-
+		console.log('after the if: ',word);
 		// iterate through an array of strings and return an array of objects
-		if (word.length > 1) return word.map(item => new Word(item));
+		if (word.length > 1) return word.map(item => new Word(...item));
 
 		// if argument is a single string destructure the array and output a string
 		const [singleWord] = word;
-
+		console.log(word);
 		// make a single object
 		return new Word(singleWord);
 	};
@@ -179,7 +180,14 @@ const HANGMAN = {};
 	HANGMAN.inc = inc;
 })(HANGMAN);
 
-const gameWords = HANGMAN.wordFactory(['one', 'compliment', 'deliberate', 'confidence', 'dynamic', 'javascript']);
+const gameWords = HANGMAN.wordFactory(
+		[
+			['boxer', "It could be a man or a dog."],
+			['compliment', "Say something to make me smile."],
+			['basketball', 'Nothing but net.'],
+			['hibernate', 'I can bare the cold.'],
+		]
+	);
 const { makeElem, makeDashes, guesses, replace, inc } = HANGMAN;
 const methodsArr = [makeElem, makeDashes, guesses, replace, inc];
 
@@ -208,6 +216,15 @@ const gameConfig = (words, methods) => {
 	const wrgGuessesDiv = makeElem()
 		.addClass('game__wrong-guesses')
 		.appendTo(game);
+
+	const hintHead = makeElem()
+		.addClass('game__hint-head')
+		.appendTo(game)
+		.text('Hint');
+
+	const wordHint = makeElem()
+		.addClass('game__word-hint')
+		.appendTo(game); 
 
 	const body = document.body;
 
@@ -256,11 +273,10 @@ const gameConfig = (words, methods) => {
 	const modal = makeElem()
 		.addClass('modal')
 		.appendTo(modalBackdrop);
-	// const modalWordDisplay = makeElem('h1').addClass('modal--word').appendTo(modal);
+
 	const modalMessage = makeElem()
 		.addClass('modal--message')
 		.appendTo(modal);
-	// let victory = false; // ~~~~~~~~ NO USE YET ~~~~~~~~~
 
 	let canIncScores = true;
 	let acknowledgeGuesses = true;
@@ -273,6 +289,10 @@ const gameConfig = (words, methods) => {
 		input = [];
 		chances = 5;
 		wordProgressDiv.text(`Word so far: ${puzzleWord}`);
+		// print hint to screen
+		wordHint.html(`
+			<p class="game__word-hint--text">${words[count].hint}</p>
+		`);
 		wrongGuessesDiv.empty();
 	};
 
@@ -287,6 +307,10 @@ const gameConfig = (words, methods) => {
 		chances = 5;
 		wins = 0;
 		wordProgressDiv.html(wrapQuestMark(puzzleWord));
+		// print hint to screen
+		wordHint.html(`
+			<p class="game__word-hint--text">${words[count].hint}</p>
+		`);
         wrongGuessesDiv.empty();
         console.log('wins: ', wins);
 	};
@@ -350,17 +374,29 @@ const gameConfig = (words, methods) => {
 				input = [];
 				chances = 5;
 				wordProgressDiv.html(wrapQuestMark(puzzleWord));
+				// print hint to screen
+				wordHint.html(`
+					<p class="game__word-hint--text">${words[count].hint}</p>
+				`);
 				winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
 			}
 		}
 
+		// print hint to screen
+		wordHint.html(`
+			<p class="game__word-hint--text">${words[count].hint}</p>
+		`);
+		
 		// ################ USER GOT ALL THE LETTERS ###############
 		if (words[count].isMatched(puzzleWord)) {
 			if (canIncScores) wins++;
 			canIncScores = false;
 			winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
 			wordProgressDiv.text(`Word so far: ${puzzleWord}`);
-
+			// print hint to screen
+			wordHint.html(`
+				<p class="game__word-hint--text">${words[count].hint}</p>
+			`);
 			// modalWordDisplay.text(puzzleWord);
 			modalMessage.html(`<h2 class="modal__heading--win">Congratulations!</h2> 
                 
@@ -395,6 +431,10 @@ const gameConfig = (words, methods) => {
         chancesDiv.html(`chances: <span class="game__score--tally">${chances}</span>`);
         winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
 		wordProgressDiv.html(wrapQuestMark(puzzleWord));
+		// print hint to screen
+		wordHint.html(`
+			<p class="game__word-hint--text">${words[count].hint}</p>
+		`);
 	};
 };
 

@@ -2,12 +2,10 @@
     // background-color: $color-primary;
     display: grid;
     grid-template-columns: $col-12-grid;
-    height: 10rem;
+    height: $header-height;
     border-radius: 4px;
     color: #fff;
     font-family: $font-primary;
-    padding-left: 4rem;
-    margin-bottom: 2rem;
     // @include gradient-primary;
     &__logo {
         grid-column: 2;
