@@ -63,7 +63,7 @@ const HANGMAN = {};
 		(function looper(answer) {
 			let [a, ...b] = [...answer];
 
-			dashed.push('?');
+			dashed.push('_');
 			if (answer.length === 1) return;
 			looper(b);
 		})(answer);
@@ -187,7 +187,7 @@ const gameConfig = (words, methods) => {
 
     const wrapQuestMark = (word) => {
         const wordArr = [...word].map((letter) => {
-            if (letter === '?') return `<span class="game__word--progress--unsolved">${letter}</span>`;
+            if (letter === '_') return `<span class="game__word--progress--unsolved">${letter}</span>`;
             return letter;
         });
         return wordArr.join('');

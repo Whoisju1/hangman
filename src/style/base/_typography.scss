@@ -1,36 +1,27 @@
 @import url('https://fonts.googleapis.com/css?family=Bungee+Inline');
-// .score {}
 .wrong-letter {
-    display: inline-block;
-    font-size: 15rem;
-    grid-column: 3 auto;
-    transform: scale(2);
+    font-size: 10rem;
     text-transform: uppercase;
-    text-shadow: 4px 3px 9px rgba(150, 150, 150, 1);
-    margin: 2.5rem;
     animation: wrong-word;
     animation-duration: .5s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
+    color: #ffffff;
     text-decoration-line: line-through;
-    text-decoration-color: black;
-    font-family: $font-primary;
-    line-height: 12rem;
-    color: #e74c3c;
-    box-shadow: 4px 8px 29px rgba(150, 150, 150, 0.2);
-    border-radius: 100px;
-    padding: 2%;
-    &::after {
-        border-radius: 100px;
-        box-shadow: 4px 8px 29px rgba(150, 150, 150, 0.2);
-        padding: 2%;
-        content: "";
-        position: absolute;
-        z-index: -1;
-        top: 0;
-        background: #ffffff;
-        left: 0;
-        height: 100%;
-        width: 100%;
-    }
+    text-decoration-color: #e04646;
+    font-family: $Abril;
+    text-shadow: 5px 6px 14px rgba(0, 0, 0, .3);
+    // &::after {
+    //     content: " ";
+    //     position: absolute;
+    //     color: #e04646;
+    //     z-index: 1;
+    //     font-family: cursive;
+    //     transform: scale(1.2);
+    //     top: 0;
+    //     left: 0;
+    //     height: 100%;
+    //     width: 100%;
+    //     font-weight: 100;
+    // }
 }

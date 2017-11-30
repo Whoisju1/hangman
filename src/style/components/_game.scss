@@ -1,8 +1,5 @@
 .game {
-    &__wrong-guesses {
-        grid-row: 3;
-        grid-column: 3/12;
-    }
+    // position: relative;
     display: grid;
     grid-template-columns: $col-12-grid;
     grid-template-rows: 7% 33% 51% auto;
@@ -11,49 +8,11 @@
     left: 0;
     bottom: 0;
     text-align: center;
-    &__word {
-        box-shadow: 5px 6px 14px rgba(0, 0, 0, .3);
-        grid-column: 3/13;
-        grid-row: 2;
-        background-image: linear-gradient(to right, #2c3e50, #4e6275);
-        border-radius: 3px;
-        border: .5px solid #2c3e50;
-        display: flex;
-        justify-content: center;
-        flex-flow: nowrap;
-        align-items: center;
-        transform: translateX(-10vw);
-        z-index: -1;
-        &--progress {
-            text-align: right;
-            display: inline-block;
-            @include gradient-text;
-            background-color: transparent;
-            font-family: 'Bungee Inline', cursive;
-            background-clip: text;
-            letter-spacing: 3rem;
-            text-transform: uppercase;
-            font-size: 6rem;
-            flex-flow: nowrap;
-            padding: .5rem 1rem;
-            transition: all .5;
-            animation-name: floating;
-            animation-iteration-count: infinite;
-            animation-direction: alternate;
-            animation-duration: 1.5s;
-            animation-play-state: running;
-            animation-fill-mode: both;
-            animation-timing-function: ease-in-out;
-            &--unsolved {
-                font-family: $Abril;
-                padding: 0;
-                color: green;
-                display: inline-block;
-                text-shadow: 7px 6px 14px rgba(0, 0, 0, .4);
-            }
-        }
-    }
     &__score {
+        animation-name: slide-in;
+        animation-duration: .8s;
+        animation-timing-function: ease-out;
+        animation-fill-mode: forwards;
         box-shadow: 5px 6px 14px rgba(0, 0, 0, .3);
         text-shadow: 5px 6px 14px rgba(0, 0, 0, .3);
         color: darken($color: #485563, $amount: 10);
@@ -79,6 +38,79 @@
         &--chances {
             font-family: $Abril;
             font-size: 200%;
+        }
+    }
+    &__wrong-guesses {
+        display: flex;
+        flex-flow: column;
+        justify-content: flex-start;
+        border: .5px solid gray;
+        width: 96.85%;
+        position: relative;
+        background-image: linear-gradient(to right, #2c3e50, #4e6275);
+        // &::before {
+        //     content: "";
+        //     // background-color: rgb(186, 186, 233);
+        //     @include gradient-primary;
+        //     position: absolute;
+        //     top: 0;
+        //     left: 0;
+        //     width: 24.12%;
+        //     height: 100%;
+        //     clip-path: polygon(0% 0%, 55% 0%, 15% 100%, 0% 100%);
+        // }
+        grid-column: 10/12;
+        grid-row: 2/4
+    }
+    &__word {
+        opacity: 0;
+        box-shadow: 5px 6px 14px rgba(0, 0, 0, .3);
+        grid-column: 3/11;
+        grid-row: 2;
+        background-image: linear-gradient(to right, #2c3e50, #4e6275);
+        border-radius: 3px;
+        border: .5px solid #2c3e50;
+        display: flex;
+        justify-content: center;
+        flex-flow: nowrap;
+        align-items: center;
+        transform: translateX(-10vw);
+        z-index: -1;
+        animation-name: fade-in;
+        animation-delay: .8s;
+        animation-duration: .3s;
+        animation-fill-mode: forwards;
+        animation-direction: normal;
+        animation-timing-function: ease-in;
+        &--progress {
+            text-align: right;
+            display: inline-block;
+            @include gradient-text;
+            background-color: transparent;
+            font-family: 'Bungee Inline', cursive;
+            background-clip: text;
+            letter-spacing: 3rem;
+            text-transform: uppercase;
+            font-size: 6rem;
+            flex-flow: nowrap;
+            padding: .5rem 1rem;
+            transition: all .5;
+            animation-name: floating;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            animation-duration: 1.5s;
+            animation-play-state: running;
+            animation-fill-mode: both;
+            animation-timing-function: ease-in-out;
+            position: relative;
+            &--unsolved {
+                font-family: $Abril;
+                padding: 0;
+                color: #b6fbff;
+                font-weight: 800;
+                display: inline-block;
+                text-shadow: 7px 6px 14px rgba(0, 0, 0, .4);
+            }
         }
     }
 }
