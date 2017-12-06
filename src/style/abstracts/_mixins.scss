@@ -27,3 +27,35 @@
     font-weight: bolder;
     color: $color;
 }
+
+
+/*
+$breakpoint argument choices:
+- phone
+- tab-portrait
+- lab-landscape 
+- big-desktop
+*/
+
+@mixin respond($breakpoint) {
+    @if breakpoint==phone {
+        @media (max-width: 600px) {
+            @content
+        }
+    }
+    @if breakpoint==tab-portrait {
+        @media (max-width: 900px) {
+            @content
+        }
+    }
+    @if breakpoint==tab-landscape {
+        @media (max-width: 12000px) {
+            @content
+        }
+    }
+    @if breakpoint==big-destop {
+        @media (max-width: 12000px) {
+            @content
+        }
+    }
+}

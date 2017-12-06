@@ -1,12 +1,10 @@
 .header {
-    // background-color: $color-primary;
     display: grid;
     grid-template-columns: $col-12-grid;
     height: $header-height;
     border-radius: 4px;
     color: #fff;
     font-family: $font-primary;
-    // @include gradient-primary;
     &__logo {
         grid-column: 2;
         font-size: 9.5rem;
