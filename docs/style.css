@@ -1,4 +1,11 @@
-@import url(https://fonts.googleapis.com/css?family=Bungee+Inline);*,
+@import url(https://fonts.googleapis.com/css?family=Bungee+Inline);/*
+$breakpoint argument choices:
+- phone
+- tab-portrait
+- lab-landscape 
+- big-desktop
+*/
+*,
 *::after,
 *::before {
   margin: 0;
