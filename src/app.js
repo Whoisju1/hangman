@@ -32,9 +32,7 @@ const HANGMAN = {};
 	// it takes an a single string, multiple stings, or an array of stings as an argument
 	HANGMAN.wordFactory = (...word) => {
 		// if argument is an array make it an array by destructuring it
-		console.log(word);
 		if (Array.isArray(...word)) [word] = word;
-		console.log('after the if: ',word);
 		// iterate through an array of strings and return an array of objects
 		if (word.length > 1) return word.map(item => new Word(...item));
 
@@ -224,6 +222,9 @@ const gameConfig = (words, methods) => {
 
 	const wordHint = makeElem()
 		.addClass('game__word-hint')
+		.html(`
+			<p class="game__word-hint--text">${words[0].hint}</p>
+		`)
 		.appendTo(game); 
 
 	const body = document.body;
@@ -312,7 +313,6 @@ const gameConfig = (words, methods) => {
 			<p class="game__word-hint--text">${words[count].hint}</p>
 		`);
         wrongGuessesDiv.empty();
-        console.log('wins: ', wins);
 	};
 
 	// COMMENCE GAME WHEN USER PRESSES THE ENTER KEY
@@ -431,10 +431,6 @@ const gameConfig = (words, methods) => {
         chancesDiv.html(`chances: <span class="game__score--tally">${chances}</span>`);
         winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
 		wordProgressDiv.html(wrapQuestMark(puzzleWord));
-		// print hint to screen
-		wordHint.html(`
-			<p class="game__word-hint--text">${words[count].hint}</p>
-		`);
 	};
 };
 
@@ -450,7 +446,22 @@ const handleKeypress = e => {
 
 		// remove listener so that this function is only run once, when the user initially comes to the site
 		target.removeEventListener('keypress', handleKeypress);
+		target.removeEventListener('click', handleKeypress);
 	}
 };
 
+function handleClick (e) {
+	const {target} = e;
+
+	const intro = document.querySelector('.intro');
+	
+	intro.classList.add('intro--remove');
+	gameConfig(gameWords, methodsArr);
+
+	target.removeEventListener('click', handleClick);
+	document.body.removeEventListener('keypress', handleKeypress);
+}
+
 document.body.addEventListener('keypress', handleKeypress);
+const introText = document.querySelector('.intro--text');
+introText.onclick = handleClick;
