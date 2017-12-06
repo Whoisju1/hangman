@@ -48,17 +48,6 @@
         width: 96.85%;
         position: relative;
         background-image: linear-gradient(to right, #2c3e50, #4e6275);
-        // &::before {
-        //     content: "";
-        //     // background-color: rgb(186, 186, 233);
-        //     @include gradient-primary;
-        //     position: absolute;
-        //     top: 0;
-        //     left: 0;
-        //     width: 24.12%;
-        //     height: 100%;
-        //     clip-path: polygon(0% 0%, 55% 0%, 15% 100%, 0% 100%);
-        // }
         grid-column: 6/7;
         grid-row: 2/5
     }

@@ -1,6 +1,5 @@
 // =======abstacts==========
 @import "abstracts/variables";
-@import "abstracts/functions";
 @import "abstracts/mixins";
 // =======base=========
 @import "base/base";
@@ -14,5 +13,3 @@
 // ============header============
 @import "layout/header";
 @import "layout/grid";
-// =========pages============
-@import "pages/home";
