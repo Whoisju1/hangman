@@ -28,6 +28,15 @@
     color: $color;
 }
 
+@mixin anima-rules__fade-in {
+    animation-name: fade-in;
+    animation-delay: .8s;
+    animation-duration: .3s;
+    animation-fill-mode: both;
+    animation-direction: normal;
+    animation-timing-function: ease-in;
+}
+
 
 /*
 $breakpoint argument choices:
