@@ -210,18 +210,20 @@ const gameConfig = (words, methods) => {
 		.appendTo(game);
 	const gameWordDiv = makeElem()
 		.addClass('game__word')
+		.addClass('game__display')
 		.appendTo(game);
-	const wrgGuessesDiv = makeElem()
+		const wrgGuessesDiv = makeElem()
 		.addClass('game__wrong-guesses')
 		.appendTo(game);
-
-	const hintHead = makeElem()
+		
+		const hintHead = makeElem()
 		.addClass('game__hint-head')
 		.appendTo(game)
 		.text('Hint');
-
-	const wordHint = makeElem()
+		
+		const wordHint = makeElem()
 		.addClass('game__word-hint')
+		.addClass('game__display')
 		.html(`
 			<p class="game__word-hint--text">${words[0].hint}</p>
 		`)

@@ -51,11 +51,9 @@
         grid-column: 6/7;
         grid-row: 2/5
     }
-    &__word {
+    &__display {
         opacity: 0;
         box-shadow: 5px 6px 14px rgba(0, 0, 0, .3);
-        grid-column: 3/5;
-        grid-row: 2;
         background-image: linear-gradient(to right, #2c3e50, #4e6275);
         border-radius: 3px;
         border: .5px solid #2c3e50;
@@ -70,9 +68,11 @@
         animation-fill-mode: forwards;
         animation-direction: normal;
         animation-timing-function: ease-in;
+    }
+    &__word {
+        grid-column: 3/5;
+        grid-row: 2;
         &--progress {
-            text-align: right;
-            display: inline-block;
             @include gradient-text;
             background-color: transparent;
             font-family: 'Bungee Inline', cursive;
@@ -81,16 +81,6 @@
             text-transform: uppercase;
             font-size: 6rem;
             flex-flow: nowrap;
-            padding: .5rem 1rem;
-            transition: all .5;
-            animation-name: floating;
-            animation-iteration-count: infinite;
-            animation-direction: alternate;
-            animation-duration: 1.5s;
-            animation-play-state: running;
-            animation-fill-mode: both;
-            animation-timing-function: ease-in-out;
-            position: relative;
             &--unsolved {
                 font-family: $Abril;
                 padding: 0;
@@ -106,7 +96,6 @@
         justify-content: space-around;
         flex-flow: column;
         align-content: space-around;
-        opacity: 0;
         box-shadow: 5px 6px 14px rgba(0, 0, 0, .3);
         grid-column: 3/5;
         grid-row: 4;
