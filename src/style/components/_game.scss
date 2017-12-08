@@ -9,10 +9,7 @@
     bottom: 0;
     text-align: center;
     &__score {
-        animation-name: slide-in;
-        animation-duration: .8s;
-        animation-timing-function: ease-out;
-        animation-fill-mode: forwards;
+        @include anima-rules__slide-in;
         box-shadow: 5px 6px 14px rgba(0, 0, 0, .3);
         text-shadow: 5px 6px 14px rgba(0, 0, 0, .3);
         color: darken($color: #485563, $amount: 10);
@@ -110,10 +107,7 @@
         }
     }
     &__hint-head {
-        animation-name: slide-in;
-        animation-duration: .8s;
-        animation-timing-function: ease-out;
-        animation-fill-mode: forwards;
+        @include anima-rules__slide-in;
         box-shadow: 5px 6px 14px rgba(0, 0, 0, .3);
         text-shadow: 5px 6px 14px rgba(0, 0, 0, .3);
         color: darken($color: #485563, $amount: 10);

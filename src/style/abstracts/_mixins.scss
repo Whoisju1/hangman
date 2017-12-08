@@ -37,6 +37,13 @@
     animation-timing-function: ease-in;
 }
 
+@mixin anima-rules__slide-in {
+    animation-name: slide-in;
+    animation-duration: .8s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
 
 /*
 $breakpoint argument choices:
