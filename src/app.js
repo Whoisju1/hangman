@@ -201,29 +201,35 @@ const gameConfig = (words, methods) => {
     
 	const [makeElem, makeDashes, guesses, replace, inc] = methods;
 
-	// create and place elements into DOM
+	// create and place elements into DOM when game inintally starts
 	const game = makeElem()
 		.addClass('game')
 		.appendTo(document.body);
-	const scoreDiv = makeElem()
-		.addClass('game__score')
+
+	const displayHead__score = makeElem()
+		.addClass('display__heading')
+		.addClass('display__heading--score')
 		.appendTo(game);
-	const gameWordDiv = makeElem()
-		.addClass('game__word')
-		.addClass('game__display')
+
+	const displayContent__word = makeElem()
+		.addClass('display__content')
+		.addClass('display__content--word')
 		.appendTo(game);
-		const wrgGuessesDiv = makeElem()
+
+	const wrgGuessesDiv = makeElem()
 		.addClass('game__wrong-guesses')
 		.appendTo(game);
 		
-		const hintHead = makeElem()
+	const displayHead__hint = makeElem()
 		.addClass('game__hint-head')
+		.addClass('display__heading')
+		.addClass('display__heading--hint')
 		.appendTo(game)
 		.text('Hint');
 		
-		const wordHint = makeElem()
-		.addClass('game__word-hint')
-		.addClass('game__display')
+	const displayContent__hint = makeElem()
+		.addClass('display__content')
+		.addClass('display__content--hint')
 		.html(`
 			<p class="game__word-hint--text">${words[0].hint}</p>
 		`)
@@ -256,18 +262,18 @@ const gameConfig = (words, methods) => {
 	let winsDiv = makeElem()
 		.addClass('game__score--wins')
 		.html(`wins: <span class="game__score--tally">${wins}</span>`)
-		.appendTo(scoreDiv);
+		.appendTo(displayHead__score);
 	let chancesDiv = makeElem()
 		.addClass('game__score--chances')
 		.html(`chances: <span class="game__score--tally">${chances}</span>`)
-		.appendTo(scoreDiv);
+		.appendTo(displayHead__score);
 	let wrongGuessesDiv = makeElem()
 		.addClass('wrong-guesses')
 		.appendTo(wrgGuessesDiv);
 	let wordProgressDiv = makeElem()
-		.addClass('game__word--progress')
+		// .addClass('game__word--progress')
 		.html(wrapQuestMark(puzzleWord))
-		.appendTo(gameWordDiv);
+		.appendTo(displayContent__word);
 
 	const modalBackdrop = makeElem()
 		.addClass('modal__backdrop')
@@ -293,9 +299,9 @@ const gameConfig = (words, methods) => {
 		chances = 5;
 		wordProgressDiv.text(`Word so far: ${puzzleWord}`);
 		// print hint to screen
-		wordHint.html(`
-			<p class="game__word-hint--text">${words[count].hint}</p>
-		`);
+		displayContent__hint.html(`<p class="game__word-hint--text">${words[count].hint}</p>`)
+				.addClass('display__content');
+
 		wrongGuessesDiv.empty();
 	};
 
@@ -311,7 +317,7 @@ const gameConfig = (words, methods) => {
 		wins = 0;
 		wordProgressDiv.html(wrapQuestMark(puzzleWord));
 		// print hint to screen
-		wordHint.html(`
+		displayContent__hint.html(`
 			<p class="game__word-hint--text">${words[count].hint}</p>
 		`);
         wrongGuessesDiv.empty();
@@ -377,7 +383,7 @@ const gameConfig = (words, methods) => {
 				chances = 5;
 				wordProgressDiv.html(wrapQuestMark(puzzleWord));
 				// print hint to screen
-				wordHint.html(`
+				displayContent__hint.html(`
 					<p class="game__word-hint--text">${words[count].hint}</p>
 				`);
 				winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
@@ -385,7 +391,7 @@ const gameConfig = (words, methods) => {
 		}
 
 		// print hint to screen
-		wordHint.html(`
+		displayContent__hint.html(`
 			<p class="game__word-hint--text">${words[count].hint}</p>
 		`);
 		
@@ -396,7 +402,7 @@ const gameConfig = (words, methods) => {
 			winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
 			wordProgressDiv.text(`Word so far: ${puzzleWord}`);
 			// print hint to screen
-			wordHint.html(`
+			displayContent__hint.html(`
 				<p class="game__word-hint--text">${words[count].hint}</p>
 			`);
 			// modalWordDisplay.text(puzzleWord);
