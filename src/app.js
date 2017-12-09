@@ -328,11 +328,15 @@ const gameConfig = (words, methods) => {
 		const isAlphabet = str => /^[a-zA-Z()]$/.test(str);
 
 		// capture key stroke
-		let { key } = e;
+		let { key, ctrlKey } = e;
 
+		
 		// if key is a letter turn it to lower case and reassign it to back to key
 		if (isAlphabet(key)) key = key.toLowerCase();
-
+		
+		// only preceed if CTRL isn't pressed along with alphabet key
+		if (ctrlKey) return;
+		
 		//
 		let userGuess = guesses(word, key);
 
