@@ -1,6 +1,6 @@
 .header {
     display: grid;
-    grid-template-columns: $col-12-grid;
+    grid-template-columns: 14% auto auto;
     height: $header-height;
     border-radius: 4px;
     color: #fff;
@@ -10,5 +10,8 @@
         font-size: 9.5rem;
         line-height: 10.5rem;
         @include gradient-text;
+        @media screen and (max-width: 538px) {
+            font-size: 6rem;
+        }
     }
 }

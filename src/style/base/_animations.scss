@@ -59,15 +59,20 @@
     60% {
         transform: translate3d(4px, 0, 0);
     }
+    0% {
+        border: .5px solid gray;
+        box-shadow: none;
+    }
+    50% {
+        border: 1.5px solid #e71818;
+        box-shadow: 10px 10px 14px rgba(197, 4, 4, 0.3);
+    }
+    100% {
+        border: .5px solid gray;
+        box-shadow: none;
+    }
 }
 
-// application of wiggle animation
-// &:hover {
-//     animation: wiggle 0.82s cubic-bezier(.36, .07, .19, .97) both;
-//     transform: translate3d(0, 0, 0);
-//     backface-visibility: hidden;
-//     perspective: 1000px;
-// }
 @keyframes slide-in {
     0% {
         transform: translateX(-100px);

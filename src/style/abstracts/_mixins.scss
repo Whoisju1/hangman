@@ -1,23 +1,16 @@
-@mixin clearfix {
-    &::after {
-        content: "";
-        display: table;
-        clear: both;
-    }
-}
-
 @mixin gradient-primary {
     background: #83a4d4;
     /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);
+    background-image: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);
     /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #b6fbff, #83a4d4);
+    background-image: linear-gradient(to right, #b6fbff, #83a4d4);
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 @mixin gradient-text {
     @include gradient-primary;
     color: transparent;
+    background-clip: text;
     -webkit-background-clip: text;
 }
 
@@ -33,7 +26,7 @@
     animation-delay: .8s;
     animation-duration: .3s;
     animation-fill-mode: both;
-    animation-direction: normal;
+    // animation-direction: normal;
     animation-timing-function: ease-in;
 }
 
@@ -44,34 +37,18 @@
     animation-fill-mode: forwards;
 }
 
+@mixin anima-rules-floating {
+    animation-name: floating;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-duration: 1.5s;
+    animation-direction: alternate;
+    animation-fill-mode: both;
+}
 
-/*
-$breakpoint argument choices:
-- phone
-- tab-portrait
-- lab-landscape 
-- big-desktop
-*/
-
-@mixin respond($breakpoint) {
-    @if breakpoint==phone {
-        @media (max-width: 600px) {
-            @content
-        }
-    }
-    @if breakpoint==tab-portrait {
-        @media (max-width: 900px) {
-            @content
-        }
-    }
-    @if breakpoint==tab-landscape {
-        @media (max-width: 12000px) {
-            @content
-        }
-    }
-    @if breakpoint==big-destop {
-        @media (max-width: 12000px) {
-            @content
-        }
-    }
+@mixin anima-rules-wiggle {
+    animation: wiggle 0.82s cubic-bezier(.36, .07, .19, .97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }

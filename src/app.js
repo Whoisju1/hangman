@@ -38,7 +38,6 @@ const HANGMAN = {};
 
 		// if argument is a single string destructure the array and output a string
 		const [singleWord] = word;
-		console.log(word);
 		// make a single object
 		return new Word(singleWord);
 	};
@@ -129,6 +128,11 @@ const HANGMAN = {};
 
 	HANGMAN.makeElem = makeElem;
 
+	// window.onresize = (e) => {
+	// 	// const func = e.getMatchedCSSRules();
+	// 	// console.log(func);
+	// 	console.log(e);
+	// };
 	// this takes in two arguments, the answer and the user's guess
 	// if the letter guess is present in the answer it outputs an array of objects with the
 	// letter as a string and the index at which the letter is present in the answer string
@@ -193,7 +197,7 @@ const gameConfig = (words, methods) => {
 
     const wrapQuestMark = (word) => {
         const wordArr = [...word].map((letter) => {
-            if (letter === '_') return `<span class="game__word--progress--unsolved">${letter}</span>`;
+            if (letter === '_') return `<span class="display__content--unsolved">${letter}</span>`;
             return letter;
         });
         return wordArr.join('');
@@ -216,8 +220,8 @@ const gameConfig = (words, methods) => {
 		.addClass('display__content--word')
 		.appendTo(game);
 
-	const wrgGuessesDiv = makeElem()
-		.addClass('game__wrong-guesses')
+	const wrongGuessesDiv = makeElem()
+		.addClass('wrong-guesses')
 		.appendTo(game);
 		
 	const displayHead__hint = makeElem()
@@ -231,7 +235,7 @@ const gameConfig = (words, methods) => {
 		.addClass('display__content')
 		.addClass('display__content--hint')
 		.html(`
-			<p class="game__word-hint--text">${words[0].hint}</p>
+			<p class="game-text hint-text">${words[0].hint}</p>
 		`)
 		.appendTo(game); 
 
@@ -267,11 +271,10 @@ const gameConfig = (words, methods) => {
 		.addClass('game__score--chances')
 		.html(`chances: <span class="game__score--tally">${chances}</span>`)
 		.appendTo(displayHead__score);
-	let wrongGuessesDiv = makeElem()
-		.addClass('wrong-guesses')
-		.appendTo(wrgGuessesDiv);
+	
 	let wordProgressDiv = makeElem()
-		// .addClass('game__word--progress')
+		.addClass('game-text')
+		.addClass('display__content--text')
 		.html(wrapQuestMark(puzzleWord))
 		.appendTo(displayContent__word);
 
@@ -299,7 +302,7 @@ const gameConfig = (words, methods) => {
 		chances = 5;
 		wordProgressDiv.text(`Word so far: ${puzzleWord}`);
 		// print hint to screen
-		displayContent__hint.html(`<p class="game__word-hint--text">${words[count].hint}</p>`)
+		displayContent__hint.html(`<p class="game-text hint-text">${words[count].hint}</p>`)
 				.addClass('display__content');
 
 		wrongGuessesDiv.empty();
@@ -318,7 +321,7 @@ const gameConfig = (words, methods) => {
 		wordProgressDiv.html(wrapQuestMark(puzzleWord));
 		// print hint to screen
 		displayContent__hint.html(`
-			<p class="game__word-hint--text">${words[count].hint}</p>
+			<p class="game-text hint-text">${words[count].hint}</p>
 		`);
         wrongGuessesDiv.empty();
 	};
@@ -346,7 +349,8 @@ const gameConfig = (words, methods) => {
 		// spread array and push them into the input array
 		if (acknowledgeGuesses) input.push(...userGuess);
 
-        puzzleWord = replace(puzzleWord, input);
+		puzzleWord = replace(puzzleWord, input);
+		
         
 		// ############## USER GUESSED WRONG #############
 		if (
@@ -362,6 +366,15 @@ const gameConfig = (words, methods) => {
 				.addClass('wrong-letter')
 				.text(key)
 				.appendTo(wrongGuessesDiv);
+			
+			wrongGuessesDiv
+				.addClass('wiggle-animation');
+
+			setTimeout(() => {
+				wrongGuessesDiv
+				.removeClass('wiggle-animation');
+			}, 1000);
+				
 		}
 
 		// ########## USER EXHAUSTS ALL HIS GUESSES ##############
@@ -388,7 +401,7 @@ const gameConfig = (words, methods) => {
 				wordProgressDiv.html(wrapQuestMark(puzzleWord));
 				// print hint to screen
 				displayContent__hint.html(`
-					<p class="game__word-hint--text">${words[count].hint}</p>
+					<p class="game-text hint-text">${words[count].hint}</p>
 				`);
 				winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
 			}
@@ -396,7 +409,7 @@ const gameConfig = (words, methods) => {
 
 		// print hint to screen
 		displayContent__hint.html(`
-			<p class="game__word-hint--text">${words[count].hint}</p>
+			<p class="game-text hint-text">${words[count].hint}</p>
 		`);
 		
 		// ################ USER GOT ALL THE LETTERS ###############
@@ -407,7 +420,7 @@ const gameConfig = (words, methods) => {
 			wordProgressDiv.text(`Word so far: ${puzzleWord}`);
 			// print hint to screen
 			displayContent__hint.html(`
-				<p class="game__word-hint--text">${words[count].hint}</p>
+				<p class="game-text hint-text">${words[count].hint}</p>
 			`);
 			// modalWordDisplay.text(puzzleWord);
 			modalMessage.html(`<h2 class="modal__heading--win">Congratulations!</h2> 
