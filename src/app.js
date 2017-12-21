@@ -467,8 +467,8 @@ const handleKeypress = e => {
 
 	if (key === 'Enter') {
 		gameConfig(gameWords, methodsArr);
-		intro.classList.add('intro--remove');
-
+		intro.parentElement.removeChild(intro);
+		
 		// remove listener so that this function is only run once, when the user initially comes to the site
 		target.removeEventListener('keypress', handleKeypress);
 		target.removeEventListener('click', handleKeypress);
@@ -477,10 +477,10 @@ const handleKeypress = e => {
 
 function handleClick (e) {
 	const {target} = e;
-
+	
 	const intro = document.querySelector('.intro');
 	
-	intro.classList.add('intro--remove');
+	intro.parentElement.removeChild(intro);
 	gameConfig(gameWords, methodsArr);
 
 	target.removeEventListener('click', handleClick);
