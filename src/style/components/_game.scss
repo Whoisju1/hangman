@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 6% [heading-start] 16% [content-start] 5% [heading-end] minmax(max-content, auto) [content-end] 6%;
     // grid-template-rows: 7% minmax(max-content, 1fr) 4% minmax(max-content, 1fr) auto;
-    grid-template-rows: repeat(2, minmax(15vh, 25vh));
+    grid-template-rows: repeat(3, minmax(100px, 500px));
     height: calc(100vh - (13rem + 1.6rem + 1.6rem));
     width: 100%;
     padding-top: 5%;
