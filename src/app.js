@@ -194,15 +194,7 @@ const { makeElem, makeDashes, guesses, replace, inc } = HANGMAN;
 const methodsArr = [makeElem, makeDashes, guesses, replace, inc];
 
 const gameConfig = (words, methods) => {
-
-    const wrapQuestMark = (word) => {
-        const wordArr = [...word].map((letter) => {
-            if (letter === '_') return `<span class="display__content--unsolved">${letter}</span>`;
-            return letter;
-        });
-        return wordArr.join('');
-    };
-    
+	
 	const [makeElem, makeDashes, guesses, replace, inc] = methods;
 
 	// create and place elements into DOM when game inintally starts
@@ -275,9 +267,9 @@ const gameConfig = (words, methods) => {
 	let wordProgressDiv = makeElem()
 		.addClass('game-text')
 		.addClass('display__content--text')
-		.html(wrapQuestMark(puzzleWord))
+		.html(puzzleWord)
 		.appendTo(displayContent__word);
-
+		
 	const modalBackdrop = makeElem()
 		.addClass('modal__backdrop')
 		.hide()
@@ -318,7 +310,7 @@ const gameConfig = (words, methods) => {
 		input = [];
 		chances = 5;
 		wins = 0;
-		wordProgressDiv.html(wrapQuestMark(puzzleWord));
+		wordProgressDiv.html(puzzleWord);
 		// print hint to screen
 		displayContent__hint.html(`
 			<p class="game-text hint-text">${words[count].hint}</p>
@@ -398,7 +390,7 @@ const gameConfig = (words, methods) => {
 				puzzleWord = makeDashes(word);
 				input = [];
 				chances = 5;
-				wordProgressDiv.html(wrapQuestMark(puzzleWord));
+				wordProgressDiv.html(puzzleWord);
 				// print hint to screen
 				displayContent__hint.html(`
 					<p class="game-text hint-text">${words[count].hint}</p>
@@ -455,7 +447,7 @@ const gameConfig = (words, methods) => {
 
         chancesDiv.html(`chances: <span class="game__score--tally">${chances}</span>`);
         winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
-		wordProgressDiv.html(wrapQuestMark(puzzleWord));
+		wordProgressDiv.html(puzzleWord);
 	};
 };
 
