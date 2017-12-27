@@ -1,8 +1,13 @@
 .game {
     display: grid;
-    grid-template-columns: 6% [heading-start] 16% [content-start] 5% [heading-end] minmax(max-content, auto) [content-end] 6%;
+    // grid-template-columns: 6% [heading-start] 16% [content-start] 5% [heading-end] minmax(max-content, auto) [content-end] 6%;
     // grid-template-rows: 7% minmax(max-content, 1fr) 4% minmax(max-content, 1fr) auto;
-    grid-template-rows: repeat(3, minmax(100px, 500px));
+    grid-template-columns: repeat(11, 1fr);
+    grid-template-rows: repeat(3, minmax(100px, 22vh));
+    @media screen and (max-width: 590px) {
+        grid-template-rows: repeat(3, 90px);
+    }
+    ;
     height: calc(100vh - (13rem + 1.6rem + 1.6rem));
     width: 100%;
     padding-top: 5%;
@@ -16,7 +21,7 @@
 
 .display {
     &__heading {
-        grid-column: heading-start/heading-end;
+        grid-column: 2/ 4;
         border: .5px solid gray;
         z-index: 2;
         clip-path: polygon(0% 0%, 100% 0%, 79.75% 100%, 0% 100%);
@@ -27,7 +32,7 @@
         text-shadow: 5px 6px 14px rgba(0, 0, 0, .3);
         color: darken($color: #485563, $amount: 10);
         @include gradient-primary;
-        font-size: 3vw;
+        font-size: 3vmax;
         &--score {
             display: flex;
             flex-flow: column;
@@ -35,7 +40,7 @@
             justify-content: center;
             align-items: baseline;
             padding-left: 5%;
-            font-size: 2vw;
+            font-size: 3vw;
         }
         &--hint {
             grid-row: 2/3;
@@ -45,16 +50,18 @@
         }
     }
     &__content {
+        display: grid;
+        grid-template-columns: repeat(9, 1fr);
+        grid-row: 100%;
         min-height: 30px;
         @include anima-rules__fade-in;
         position: relative;
         background-image: linear-gradient(to right, #2c3e50, #4e6275);
-        grid-column: content-start/content-end;
-        display: flex;
+        grid-column: 3/11;
         border: .5px solid gray;
-        justify-content: center;
-        align-items: center;
         &--word {
+            display: grid;
+            grid-template-rows: 100%;
             flex-flow: nowrap;
             grid-row: 1/2;
             font-family: 'Bungee Inline', cursive;
@@ -73,19 +80,19 @@
             }
         }
         &--text {
-            width: 90%;
-            max-height: 100%;
-            font-size: 6vw;
+            min-height: 100%;
             letter-spacing: 2px;
             text-align: center;
+            font-size: 7vmin;
             @include anima-rules-floating;
+            grid-column: 2/-1;
         }
         &--unsolved {
             @include gradient-text;
         }
         &--hint {
             grid-row: 2/3;
-            font-size: 3rem;
+            font-size: 200px;
             z-index: -2;
             &::before {
                 content: "";
@@ -106,21 +113,26 @@
 }
 
 .hint-text {
-    font-size: 2.5vw;
+    font-size: 2vw;
+    grid-column: 3/-1;
+    display: grid;
+    justify-content: center;
+    align-items: center;
 }
 
 .wrong-guesses {
     display: flex;
     justify-content: space-around;
     flex-direction: row;
-    grid-column: heading-start/content-end;
-    border: .5px solid gray;
-    background-image: linear-gradient(to right, #2c3e50, #4e6275);
+    grid-row: 3/-1;
+    grid-column: 2/-2;
+    // border: .5px solid gray;
+    // background-image: linear-gradient(to right, #2c3e50, #4e6275);
 }
 
-.wiggle-animation {
-    @include anima-rules-wiggle;
-    border: 1.5px solid #e71818;
-    box-shadow: 10px 10px 14px rgba(197, 4, 4, 0.3);
-    transition: all 1s;
-}
+// .wiggle-animation {
+//     @include anima-rules-wiggle;
+//     border: 1.5px solid #e71818;
+//     box-shadow: 10px 10px 14px rgba(197, 4, 4, 0.3);
+//     transition: all 1s;
+// }

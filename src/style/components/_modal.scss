@@ -16,6 +16,7 @@
     &__notable {
         text-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
         color: rgb(48, 46, 46);
+        max-width: 90vw;
         &--win {
             font-weight: bolder;
             color: green;
