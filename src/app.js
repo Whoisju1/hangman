@@ -148,9 +148,9 @@ const HANGMAN = {};
 
   namespace.guesses = guesses;
 
-  // replaces characters in a string where with provided replacement character 
+  // replaces characters in a string where with provided replacement character
   // and index where it should be placed
-  // it receives two arguments, a string and an array of objects containing 
+  // it receives two arguments, a string and an array of objects containing
   // a character the user guessed and it's index in the answer
   // all characters provided are contained in the answer
   const replace = (word, input) => {
@@ -442,12 +442,11 @@ const handleKeypress = (e) => {
 
   const intro = global.document.querySelector('.intro');
 
-<<<<<<< HEAD
   if (key === 'Enter') {
     gameConfig(gameWords, methodsArr);
-    intro.classList.add('intro--remove');
+    intro.parentElement.removeChild(intro);
 
-    // remove listener so that this function is only run once, 
+    // remove listener so that this function is only run once...
     // when the user initially comes to the site
     target.removeEventListener('keypress', handleKeypress);
     target.removeEventListener('click', handleKeypress);
@@ -459,27 +458,8 @@ function handleClick(e) {
 
   const intro = global.document.querySelector('.intro');
 
-  intro.classList.add('intro--remove');
+  intro.parentElement.removeChild(intro);
   gameConfig(gameWords, methodsArr);
-=======
-	if (key === 'Enter') {
-		gameConfig(gameWords, methodsArr);
-		intro.parentElement.removeChild(intro);
-		
-		// remove listener so that this function is only run once, when the user initially comes to the site
-		target.removeEventListener('keypress', handleKeypress);
-		target.removeEventListener('click', handleKeypress);
-	}
-};
-
-function handleClick (e) {
-	const {target} = e;
-	
-	const intro = document.querySelector('.intro');
-	
-	intro.parentElement.removeChild(intro);
-	gameConfig(gameWords, methodsArr);
->>>>>>> master
 
   target.removeEventListener('click', handleClick);
   global.document.body.removeEventListener('keypress', handleKeypress);
