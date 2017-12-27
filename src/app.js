@@ -442,6 +442,7 @@ const handleKeypress = (e) => {
 
   const intro = global.document.querySelector('.intro');
 
+<<<<<<< HEAD
   if (key === 'Enter') {
     gameConfig(gameWords, methodsArr);
     intro.classList.add('intro--remove');
@@ -460,6 +461,25 @@ function handleClick(e) {
 
   intro.classList.add('intro--remove');
   gameConfig(gameWords, methodsArr);
+=======
+	if (key === 'Enter') {
+		gameConfig(gameWords, methodsArr);
+		intro.parentElement.removeChild(intro);
+		
+		// remove listener so that this function is only run once, when the user initially comes to the site
+		target.removeEventListener('keypress', handleKeypress);
+		target.removeEventListener('click', handleKeypress);
+	}
+};
+
+function handleClick (e) {
+	const {target} = e;
+	
+	const intro = document.querySelector('.intro');
+	
+	intro.parentElement.removeChild(intro);
+	gameConfig(gameWords, methodsArr);
+>>>>>>> master
 
   target.removeEventListener('click', handleClick);
   global.document.body.removeEventListener('keypress', handleKeypress);
