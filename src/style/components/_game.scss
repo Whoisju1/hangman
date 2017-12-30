@@ -4,7 +4,7 @@
     grid-template-rows: repeat(2, minmax(100px, 22vh)) max-content;
     grid-column-gap: 5px;
     @media screen and (max-width: 590px) {
-        grid-template-rows: repeat(2, 15vh) 1fr;
+        grid-template-rows: repeat(2, 15vh) auto 1fr;
     }
     ;
     height: calc(100vh - (13rem + 1.6rem + 1.6rem));
@@ -108,6 +108,8 @@
 }
 
 .game-text {
+    display: grid;
+    align-items: end;
     @include gradient-text;
 }
 
