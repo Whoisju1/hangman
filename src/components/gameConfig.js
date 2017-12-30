@@ -143,9 +143,6 @@ const gameConfig = (words, methods) => {
 
     //
     const userGuess = guesses(word, key);
-    console.log('word: ', word);
-    console.log('count: ,', count);
-    console.log('puzzleWord: ', puzzleWord);
 
     // this function tests the key entered to find out if it is an alphabetical character
     const alphabetTestPast = isAlphabet(key);
@@ -252,7 +249,7 @@ const gameConfig = (words, methods) => {
 
     chancesDiv.html(`chances: <span class="game__score--tally">${chances}</span>`);
     winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
-    wordProgressDiv.html(puzzleWord);
+    wordProgressDiv.text(puzzleWord);
   };
 
   // if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
