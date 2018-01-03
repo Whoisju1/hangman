@@ -134,19 +134,15 @@
     align-items: start;
     grid-row: 1/span 2;
     grid-column: -2/-1;
-    border: .5px solid gray;
+    // border: .5px solid gray;
     margin-right: 5px;
 }
 
 .wiggle-animation {
     @include anima-rules-wiggle;
-    border: 1.5px solid #e71818;
-    box-shadow: 10px 10px 14px rgba(197, 4, 4, 0.3);
-    transition: all 1s;
 }
 
 .mobile-input {
-    // background-color: white;
     display: grid;
     grid-gap: 5px;
     font-size: 3vmax;
@@ -175,8 +171,7 @@
             z-index: -1;
         }
         &:hover {
-            color: #ffffff;
-            transform: translateY(-3px);
+            border: 1px solid #83a4d4;
         }
         &:active {
             transform: translateY(2px);

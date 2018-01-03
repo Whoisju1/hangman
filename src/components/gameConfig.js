@@ -1,8 +1,6 @@
 const gameConfig = (words, methods) => {
   const [makeElem, makeDashes, guesses, replace, inc] = methods;
 
-  const mobileInputChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-
   // create and place elements into DOM when game initially starts
   const game = makeElem()
     .addClass('game')
@@ -22,14 +20,13 @@ const gameConfig = (words, methods) => {
     .addClass('wrong-guesses')
     .appendTo(game);
 
-  const displayHeadHint = makeElem();
-
-  displayHeadHint
+  // display hint heading
+  makeElem()
     .addClass('game__hint-head')
     .addClass('display__heading')
     .addClass('display__heading--hint')
-    .appendTo(game)
-    .text('Hint');
+    .text('Hint')
+    .appendTo(game);
 
   const displayContentHint = makeElem()
     .addClass('display__content')
@@ -56,7 +53,7 @@ const gameConfig = (words, methods) => {
 
   let chances = 5;
 
-  let guessedLetters = [];
+  const guessedLetters = [];
 
   let puzzleWord = makeDashes(word);
 
@@ -96,47 +93,50 @@ const gameConfig = (words, methods) => {
   let canIncScores = true;
   let acknowledgeGuesses = true;
 
-  const softReset = () => {
-    guessedLetters = [];
-    count = inc(count);
-    word = words[count].word;
-    puzzleWord = makeDashes(word);
-    input = [];
-    chances = 5;
-    wordProgressDiv.text(`Word so far: ${puzzleWord}`);
-    // print hint to screen
-    displayContentHint.html(`<p class="game-text hint-text">${words[count].hint}</p>`)
-      .addClass('display__content');
+  // GAME IS PROGRESSES OR RESTARTS BASED ON THE ARGUMENTS PASSED
+  const resetWord = (callback = () => {}) => {
+    const startOver = words[count] === words[words.length - 1];
 
-    wrongGuessesDiv.empty();
-  };
+    return (
+      () => {
+        if (startOver) {
+          count = 0;
+          wins = 0;
+        } else {
+          count = inc(count);
+        }
+        word = words[count].word;
+        puzzleWord = makeDashes(word);
+        canIncScores = true;
+        chances = 5;
+        input = [];
+        wordProgressDiv.text(puzzleWord);
+        // print hint to screen
+        displayContentHint.html(`<p class="game-text hint-text">${words[count].hint}</p>`)
+          .addClass('display__content');
+        winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
+        chancesDiv.html(`chances: <span class="game__score--tally">${chances}</span>`);
+        // empty the wrong guesses div
+        wrongGuessesDiv.empty();
 
-  // RESTARTS GAME -- STARTS FROM THE BEGINNING
-  const hardReset = () => {
-    guessedLetters = [];
-    canIncScores = true;
-    count = inc();
-    word = words[count].word;
-    puzzleWord = makeDashes(word);
-    input = [];
-    chances = 5;
-    wins = 0;
-    wordProgressDiv.html(puzzleWord);
-    // print hint to screen
-    displayContentHint.html(`<p class="game-text hint-text">${words[count].hint}</p>`);
-    wrongGuessesDiv.empty();
+        callback();
+      }
+    );
   };
 
   // THE FUNCTION THAT RUNS UPON USER GUESS
   const onGuess = (e) => {
+    // this function tests the user input to find out if it is an alphabetical character
     const isAlphabet = str => /^[a-zA-Z()]$/.test(str);
+    const key = ((event, alphabetTest) => {
+      // capture key stroke
+      const { key = event.target.innerText } = event;
 
-    // capture key stroke
-    let { key = e.target.innerText } = e;
+      // if use input is a letter make it lower case and return it
+      return (alphabetTest(key)) ? key.toLowerCase() : key;
+    })(e, isAlphabet);
+
     const { ctrlKey = false } = e;
-
-    // if key is a letter turn it to lower case and reassign it to back to key
-    if (isAlphabet(key)) key = key.toLowerCase();
 
     // only precede if CTRL isn't pressed along with alphabet key
     if (ctrlKey) return;
@@ -144,65 +144,79 @@ const gameConfig = (words, methods) => {
     //
     const userGuess = guesses(word, key);
 
-    // this function tests the key entered to find out if it is an alphabetical character
-    const alphabetTestPast = isAlphabet(key);
+    const letterElements = Array.from(document.querySelectorAll('.mobile-input__letter'));
+
+    const isGuessWrong = (() => (
+      !words[count].isIncluded(key) &&
+      canIncScores &&
+      chances >= 1 &&
+      isAlphabet(key) &&
+      !guessedLetters.includes(key)
+    ))();
+
+    const isGuessCorrect = (() => (
+      words[count].isIncluded(key) &&
+      canIncScores &&
+      chances >= 1 &&
+      isAlphabet(key) &&
+      !guessedLetters.includes(key)
+    ))();
+
+    // if letter is not found highlight letter in red
+    letterElements.forEach(el => el.highLight(isGuessWrong, (element) => {
+      if (key === element.textContent) {
+        element.style.color = '#e74c3c';
+        element.style.border = '.5px solid #e74c3c';
+        element.addClass('wiggle-animation');
+      }
+    }));
+
+    // if letter is found highlight letter in green
+    letterElements.forEach(el => el.highLight(isGuessCorrect, (element) => {
+      if (key === element.textContent) {
+        element.style.color = '#2ecc71';
+        element.style.border = '.5px solid #2ecc71';
+      }
+    }));
+
 
     // spread array and push them into the input array
     if (acknowledgeGuesses) input.push(...userGuess);
 
     puzzleWord = replace(puzzleWord, input);
 
-
     // ############## USER GUESSED WRONG #############
-    if (
-      !words[count].isIncluded(key) &&
-      canIncScores === true &&
-      chances >= 1 &&
-      alphabetTestPast &&
-      !guessedLetters.includes(key)
-    ) {
+    if (isGuessWrong) {
       chances--;
       guessedLetters.push(key);
-      makeElem()
-        .addClass('wrong-letter')
-        .text(key)
-        .appendTo(wrongGuessesDiv);
-
-      wrongGuessesDiv
-        .addClass('wiggle-animation');
-
-      setTimeout(() => {
-        wrongGuessesDiv
-          .removeClass('wiggle-animation');
-      }, 1000);
     }
+
+    const reset = resetWord(() => {
+      modalBackdrop.hide();
+      letterElements.forEach(el => el.highLight(true, (element) => {
+        element.style.color = 'transparent';
+        element.style.border = 'none';
+        element.removeClass('wiggle-animation');
+      }));
+    });
+
+    modal.onclick = reset;
 
     // ########## USER EXHAUSTS ALL HIS GUESSES ##############
     if (!chances) {
       acknowledgeGuesses = false;
-      // alert('You lost!');
-      // count = inc();
+
       modalMessage.html(`<span class="modal__heading--loss">You lose!</span> 
             <br> 
             The word was <span class="modal__notable--loss">"${words[count].word}"</span>
             <br>
             Press <span class="modal__notable--loss">"Enter"</span> to start over.`);
       modalBackdrop.show();
-      if (key === 'Enter') {
-        count = inc();
-        wins = inc();
-        modalBackdrop.hide();
-        wrongGuessesDiv.empty();
-        acknowledgeGuesses = true;
-        const { word: currentWord } = words[count];
-        puzzleWord = makeDashes(currentWord);
-        input = [];
-        chances = 5;
-        wordProgressDiv.html(puzzleWord);
-        // print hint to screen
-        displayContentHint.html(`<p class="game-text hint-text">${words[count].hint}</p>`);
-        winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
-      }
+
+      // if enter id pressed move on to the next word
+      (key === 'Enter') && reset();
+
+      modal.onclick = reset;
     }
 
     // print hint to screen
@@ -218,7 +232,6 @@ const gameConfig = (words, methods) => {
       displayContentHint.html(`<p class="game-text hint-text">${words[count].hint}</p>`);
       // modalWordDisplay.text(puzzleWord);
       modalMessage.html(`<h2 class="modal__heading--win">Congratulations!</h2> 
-                
                 <p class="modal__notable">You're correct. The word's <span class="modal__notable--win">"${puzzleWord}"</span>
                 Press <span class="modal__notable--win">"Enter"</span> to attempt the next word.</p>`);
       modalBackdrop.show();
@@ -232,19 +245,7 @@ const gameConfig = (words, methods) => {
       }
 
       // move to next word when the user presses enter
-      if (key === 'Enter') {
-        canIncScores = true;
-        // ###### USER GOT ALL THE WORDS ########
-        if (words[count] !== words[words.length - 1]) {
-          //  to next word and reset negative record regarding eat individual word
-          softReset();
-          modalBackdrop.hide();
-        } else {
-          // the game resets when all the words have been solved
-          hardReset();
-          modalBackdrop.hide();
-        }
-      }
+      (key === 'Enter') && reset();
     }
 
     chancesDiv.html(`chances: <span class="game__score--tally">${chances}</span>`);
@@ -252,23 +253,26 @@ const gameConfig = (words, methods) => {
     wordProgressDiv.text(puzzleWord);
   };
 
-  // if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-  //   // some code..
-  // } else {
-  //   // COMMENCE GAME WHEN USER PRESSES THE ENTER KEY
-  // }
+  (() => {
+    const mobileInputChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
+    mobileInputChoices.forEach((letter) => {
+      const letterDiv = makeElem('a');
+      letterDiv
+        .onclick = onGuess;
 
-  mobileInputChoices.forEach((letter) => {
-    const letterDiv = makeElem('a');
-    letterDiv
-      .onclick = onGuess;
+      letterDiv.highLight = function (condition, callback) {
+        if (condition) callback(this);
+      };
 
-    letterDiv
-      .addClass('mobile-input__letter')
-      .html(letter)
-      .appendTo(mobileInput);
-  });
+      letterDiv
+        .addClass('mobile-input__letter')
+        .html(letter)
+        .appendTo(mobileInput);
+
+    });
+  })();
+
 
   body.onkeyup = onGuess;
 };
