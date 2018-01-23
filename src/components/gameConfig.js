@@ -45,7 +45,6 @@ const gameConfig = (words, methods) => {
   let input = [];
 
   const userGuesses = new Set();
-  console.log(userGuesses);
 
   // this sets the count to zero
   // the inc function returns zero when it is passed no arguments
@@ -55,12 +54,6 @@ const gameConfig = (words, methods) => {
   let count = inc();
 
   let { word } = words[count];
-
-  // let wins = 0;
-
-  // let chances = 5;
-
-  const guessedLetters = [];
 
   let puzzleWord = makeDashes(word);
 
@@ -117,6 +110,7 @@ const gameConfig = (words, methods) => {
         canIncScores = true;
         stats.resetGuesses();
         input = [];
+        userGuesses.clear();
         wordProgressDiv.text(puzzleWord);
         // print hint to screen
         displayContentHint.html(`<p class="game-text hint-text">${words[count].hint}</p>`)
@@ -135,7 +129,7 @@ const gameConfig = (words, methods) => {
   const onGuess = (e) => {
     // this function tests the user input to find out if it is an alphabetical character
     const isAlphabet = str => /^[a-zA-Z()]$/.test(str);
-    const key = ((event, alphabetTest) => {
+    const userInput = ((event, alphabetTest) => {
       // capture key stroke
       const { key = event.target.innerText } = event;
 
@@ -149,43 +143,46 @@ const gameConfig = (words, methods) => {
     if (ctrlKey) return;
 
     //
-    const userGuess = guesses(word, key);
+    const userGuess = guesses(word, userInput);
 
     const letterElements = Array.from(document.querySelectorAll('.mobile-input__letter'));
 
     const isGuessWrong = (() => (
-      !words[count].isIncluded(key) &&
+      !words[count].isIncluded(userInput) &&
       canIncScores &&
       stats.guessesLeft >= 1 &&
-      isAlphabet(key) &&
-      !guessedLetters.includes(key)
+      isAlphabet(userInput) &&
+      !userGuesses.has(userInput)
     ))();
 
     const isGuessCorrect = (() => (
-      words[count].isIncluded(key) &&
+      words[count].isIncluded(userInput) &&
       canIncScores &&
       stats.guessesLeft >= 1 &&
-      isAlphabet(key) &&
-      !guessedLetters.includes(key)
+      isAlphabet(userInput) &&
+      !userGuesses.has(userInput)
     ))();
 
     // if letter is not found highlight letter in red
     letterElements.forEach(el => el.highLight(isGuessWrong, (element) => {
-      if (key === element.textContent) {
+      // console.log('element -- wrong: ', element.length);
+      if (userInput === element.textContent) {
         element.style.color = '#e74c3c';
         element.style.border = '.5px solid #e74c3c';
         element.addClass('wiggle-animation');
       }
     }));
-
+    
     // if letter is found highlight letter in green
     letterElements.forEach(el => el.highLight(isGuessCorrect, (element) => {
-      if (key === element.textContent) {
+      // console.log('element -- right: ', element);
+      if (userInput === element.textContent) {
         element.style.color = '#2ecc71';
         element.style.border = '.5px solid #2ecc71';
       }
     }));
 
+    const elemLength = letterElements.filter(elem => (elem.textContent)).length;
 
     // spread array and push them into the input array
     if (acknowledgeGuesses) input.push(...userGuess);
@@ -195,7 +192,7 @@ const gameConfig = (words, methods) => {
     // ############## USER GUESSED WRONG #############
     if (isGuessWrong) {
       stats.decrementGuesses();
-      guessedLetters.push(key);
+      userGuesses.add(userInput);
     }
 
     const reset = resetWord(() => {
@@ -221,7 +218,7 @@ const gameConfig = (words, methods) => {
       modalBackdrop.show();
 
       // if enter id pressed move on to the next word
-      if (key === 'Enter') reset();
+      if (userInput === 'Enter') reset();
 
       modal.onclick = reset;
     }
@@ -252,7 +249,7 @@ const gameConfig = (words, methods) => {
       }
 
       // move to next word when the user presses enter
-      if (key === 'Enter') reset();
+      if (userInput === 'Enter') reset();
     }
 
     chancesDiv.html(`chances: <span class="game__score--tally">${stats.guessesLeft}</span>`);
