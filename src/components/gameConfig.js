@@ -106,6 +106,7 @@ const gameConfig = (words, methods) => {
           count = inc(count);
         }
         word = words[count].word;
+        acknowledgeGuesses = true
         puzzleWord = makeDashes(word);
         canIncScores = true;
         stats.resetGuesses();
@@ -172,7 +173,7 @@ const gameConfig = (words, methods) => {
         element.addClass('wiggle-animation');
       }
     }));
-    
+
     // if letter is found highlight letter in green
     letterElements.forEach(el => el.highLight(isGuessCorrect, (element) => {
       // console.log('element -- right: ', element);
