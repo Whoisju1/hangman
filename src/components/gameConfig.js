@@ -1,5 +1,9 @@
+import GameStats from './GameStats';
+
 const gameConfig = (words, methods) => {
   const [makeElem, makeDashes, guesses, replace, inc] = methods;
+
+  const stats = new GameStats(0, 5);
 
   // create and place elements into DOM when game initially starts
   const game = makeElem()
@@ -40,6 +44,9 @@ const gameConfig = (words, methods) => {
 
   let input = [];
 
+  const userGuesses = new Set();
+  console.log(userGuesses);
+
   // this sets the count to zero
   // the inc function returns zero when it is passed no arguments
   // otherwise it takes a number as an argument and turns that number incremented by 1
@@ -49,9 +56,9 @@ const gameConfig = (words, methods) => {
 
   let { word } = words[count];
 
-  let wins = 0;
+  // let wins = 0;
 
-  let chances = 5;
+  // let chances = 5;
 
   const guessedLetters = [];
 
@@ -60,11 +67,11 @@ const gameConfig = (words, methods) => {
   // ############ SETTING INITIAL DOM ELEMENTS ###############
   const winsDiv = makeElem()
     .addClass('game__score--wins')
-    .html(`wins: <span class="game__score--tally">${wins}</span>`)
+    .html(`wins: <span class="game__score--tally">${stats.wins}</span>`)
     .appendTo(displayHeadScore);
   const chancesDiv = makeElem()
     .addClass('game__score--chances')
-    .html(`chances: <span class="game__score--tally">${chances}</span>`)
+    .html(`chances: <span class="game__score--tally">${stats.guessesLeft}</span>`)
     .appendTo(displayHeadScore);
 
   const wordProgressDiv = makeElem()
@@ -101,21 +108,21 @@ const gameConfig = (words, methods) => {
       () => {
         if (startOver) {
           count = 0;
-          wins = 0;
+          stats.resetWins();
         } else {
           count = inc(count);
         }
         word = words[count].word;
         puzzleWord = makeDashes(word);
         canIncScores = true;
-        chances = 5;
+        stats.resetGuesses();
         input = [];
         wordProgressDiv.text(puzzleWord);
         // print hint to screen
         displayContentHint.html(`<p class="game-text hint-text">${words[count].hint}</p>`)
           .addClass('display__content');
-        winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
-        chancesDiv.html(`chances: <span class="game__score--tally">${chances}</span>`);
+        winsDiv.html(`wins: <span class="game__score--tally">${stats.wins}</span>`);
+        chancesDiv.html(`chances: <span class="game__score--tally">${stats.guessesLeft}</span>`);
         // empty the wrong guesses div
         wrongGuessesDiv.empty();
 
@@ -149,7 +156,7 @@ const gameConfig = (words, methods) => {
     const isGuessWrong = (() => (
       !words[count].isIncluded(key) &&
       canIncScores &&
-      chances >= 1 &&
+      stats.guessesLeft >= 1 &&
       isAlphabet(key) &&
       !guessedLetters.includes(key)
     ))();
@@ -157,7 +164,7 @@ const gameConfig = (words, methods) => {
     const isGuessCorrect = (() => (
       words[count].isIncluded(key) &&
       canIncScores &&
-      chances >= 1 &&
+      stats.guessesLeft >= 1 &&
       isAlphabet(key) &&
       !guessedLetters.includes(key)
     ))();
@@ -187,7 +194,7 @@ const gameConfig = (words, methods) => {
 
     // ############## USER GUESSED WRONG #############
     if (isGuessWrong) {
-      chances--;
+      stats.decrementGuesses();
       guessedLetters.push(key);
     }
 
@@ -203,7 +210,7 @@ const gameConfig = (words, methods) => {
     modal.onclick = reset;
 
     // ########## USER EXHAUSTS ALL HIS GUESSES ##############
-    if (!chances) {
+    if (!stats.guessesLeft) {
       acknowledgeGuesses = false;
 
       modalMessage.html(`<span class="modal__heading--loss">You lose!</span> 
@@ -214,7 +221,7 @@ const gameConfig = (words, methods) => {
       modalBackdrop.show();
 
       // if enter id pressed move on to the next word
-      (key === 'Enter') && reset();
+      if (key === 'Enter') reset();
 
       modal.onclick = reset;
     }
@@ -224,9 +231,9 @@ const gameConfig = (words, methods) => {
 
     // ################ USER GOT ALL THE LETTERS ###############
     if (words[count].isMatched(puzzleWord)) {
-      if (canIncScores) wins++;
+      if (canIncScores) stats.incrementWins();
       canIncScores = false;
-      winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
+      winsDiv.html(`wins: <span class="game__score--tally">${stats.wins}</span>`);
       wordProgressDiv.text(`Word so far: ${puzzleWord}`);
       // print hint to screen
       displayContentHint.html(`<p class="game-text hint-text">${words[count].hint}</p>`);
@@ -237,7 +244,7 @@ const gameConfig = (words, methods) => {
       modalBackdrop.show();
 
       //  player completed every word -----TODO-----
-      if (wins === words.length) {
+      if (stats.wins === words.length) {
         modalMessage.html(`
                     <h1 class="modal__heading--win">Congratulations</h1>
                     <p class="modal--message">You've found all the words. Press Enter to over</p>
@@ -245,11 +252,11 @@ const gameConfig = (words, methods) => {
       }
 
       // move to next word when the user presses enter
-      (key === 'Enter') && reset();
+      if (key === 'Enter') reset();
     }
 
-    chancesDiv.html(`chances: <span class="game__score--tally">${chances}</span>`);
-    winsDiv.html(`wins: <span class="game__score--tally">${wins}</span>`);
+    chancesDiv.html(`chances: <span class="game__score--tally">${stats.guessesLeft}</span>`);
+    winsDiv.html(`wins: <span class="game__score--tally">${stats.wins}</span>`);
     wordProgressDiv.text(puzzleWord);
   };
 
@@ -261,7 +268,7 @@ const gameConfig = (words, methods) => {
       letterDiv
         .onclick = onGuess;
 
-      letterDiv.highLight = function (condition, callback) {
+      letterDiv.highLight = function highlight(condition, callback) {
         if (condition) callback(this);
       };
 
@@ -269,7 +276,6 @@ const gameConfig = (words, methods) => {
         .addClass('mobile-input__letter')
         .html(letter)
         .appendTo(mobileInput);
-
     });
   })();
 
