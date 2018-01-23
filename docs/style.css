@@ -223,7 +223,6 @@ body {
       height: 100%; }
 
 .game-text {
-  display: grid;
   align-items: end;
   background: #83a4d4;
   /* fallback for old browsers */
