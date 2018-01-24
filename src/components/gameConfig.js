@@ -3,6 +3,7 @@ import GameStats from './GameStats';
 const gameConfig = (words, methods) => {
   const [makeElem, makeDashes, guesses, replace, inc] = methods;
 
+  // set game stats: wins = 0 and chances = 5
   const stats = new GameStats(0, 5);
 
   // create and place elements into DOM when game initially starts
