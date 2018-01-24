@@ -166,7 +166,6 @@ const gameConfig = (words, methods) => {
 
     // if letter is not found highlight letter in red
     letterElements.forEach(el => el.highLight(isGuessWrong, (element) => {
-      // console.log('element -- wrong: ', element.length);
       if (userInput === element.textContent) {
         element.style.color = '#e74c3c';
         element.style.border = '.5px solid #e74c3c';
@@ -182,8 +181,6 @@ const gameConfig = (words, methods) => {
         element.style.border = '.5px solid #2ecc71';
       }
     }));
-
-    const elemLength = letterElements.filter(elem => (elem.textContent)).length;
 
     // spread array and push them into the input array
     if (acknowledgeGuesses) input.push(...userGuess);
@@ -258,18 +255,25 @@ const gameConfig = (words, methods) => {
     wordProgressDiv.text(puzzleWord);
   };
 
+  // create buttons and assign letters to them
   (() => {
     const mobileInputChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
     mobileInputChoices.forEach((letter) => {
       const letterDiv = makeElem('a');
+
+      // attach event listener to each button
       letterDiv
         .onclick = onGuess;
 
+      // give highlight function to each element which accepts a ...
+      // condition and a callback function as an argument
       letterDiv.highLight = function highlight(condition, callback) {
+        // if the condition is truthy then the callback function will be executed
         if (condition) callback(this);
       };
 
+      // add a class, content, and styling to each element
       letterDiv
         .addClass('mobile-input__letter')
         .html(letter)
