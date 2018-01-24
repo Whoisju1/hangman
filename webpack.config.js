@@ -1,4 +1,5 @@
 const path = require('path');
+const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -15,7 +16,29 @@ module.exports = {
         test: /\.scss/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: [{ loader: 'css-loader' }, { loader: 'sass-loader' }],
+          use: [
+            { loader: 'css-loader' },
+            {
+              loader: 'postcss-loader',
+              options: {
+                indent: 'postcss',
+                plugins: () => [
+                  autoprefixer({
+                    browsers: [
+                      '> 1%',
+                      'last 2 versions',
+                    ],
+                  }),
+                ],
+              },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                importLoaders: 2,
+              },
+            },
+          ],
         }),
       },
     ],
