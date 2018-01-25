@@ -179,10 +179,17 @@ const HANGMAN = {};
 })(HANGMAN);
 
 const gameWords = HANGMAN.wordFactory([
-  ['boxer', 'It could be a man or a dog.'],
-  ['compliment', 'Say something to make me smile.'],
+  ['hibernate', 'I can bear the cold.'],
+  ['luxury', 'Not many can afford this.'],
+  ['jigsaw', 'This one is very puzzling.'],
+  ['short', 'It becomes shorter when you add two letters to it.'],
   ['basketball', 'Nothing but net.'],
-  ['hibernate', 'I can bare the cold.'],
+  ['boxer', 'It could be a man or a dog.'],
+  ['silence', 'Saying it\'s name will break it.'],
+  ['incomplete', 'This sentence is'],
+  ['compliment', 'Say something to make me smile.'],
+  ['Coffin', 'The man who invented it doesn\'t want it. The man who bought it doesn\'t need it. The man who needs it doesn\'t know it.'],
+  ['library', 'This building has the most stories. What is it?'],
 ]);
 const {
   makeElem, makeDashes, guesses, replace, inc,
