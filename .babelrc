@@ -1,9 +1,10 @@
 {
     "presets": [
-        ["env", {
+        ["@babel/env", {
           "targets": {
             "browsers": ["last 2 versions", "safari >= 7", "> 1%"]
           }
-        }]
+        },
+      "@babel/typescript"]
       ]
 }
