@@ -131,51 +131,13 @@ const HANGMAN = {};
   // this takes in two arguments, the answer and the user's guess
   // if the letter guess is present in the answer it outputs an array of objects with the
   // letter as a string and the index at which the letter is present in the answer string
-  const guesses = (answer, letterGuessed) => (
-    // spread the characters in the string and place them in an array
-    // then iterate through them using the reduce function which returns a array that contains
-    // all the letter guessed and the the index at which it is matched in the answers string
-    [...answer].reduce((arr, letter, index) => {
-      if (letterGuessed === letter) {
-        const obj = {
-          key: letterGuessed,
-          index,
-        };
-        arr.push(obj);
-      }
-      return arr;
-    }, [])
-  );
-
-  namespace.guesses = guesses;
 
   // replaces characters in a string where with provided replacement character
   // and index where it should be placed
   // it receives two arguments, a string and an array of objects containing
   // a character the user guessed and it's index in the answer
   // all characters provided are contained in the answer
-  const replace = (word, input) => {
-    const resultStr = input.reduce((previous, guess) => {
-      // insert each letter according to it's provided index
-      if (guess.index !== -1) {
-        return (
-          previous.substring(0, guess.index) +
-          guess.key +
-          previous.substring(guess.index + 1, previous.length)
-        );
-      }
-    }, word);
-
-    // return altered string as output
-    return resultStr;
-  };
-
-  namespace.replace = replace;
-
   // takes in a number increments it by one and returns the incremented number
-  const inc = (num = -1) => num + 1;
-
-  namespace.inc = inc;
 })(HANGMAN);
 
 const gameWords = HANGMAN.wordFactory([
