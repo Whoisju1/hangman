@@ -1,15 +1,15 @@
-import { GameStats } from './gameStats';
+import { WordStats } from './wordStats';
 
-describe('GameStats', () => {
-  const stats = new GameStats();
-  describe('GameStats.guessesLeft', () => {
+describe('WordStats', () => {
+  const stats = new WordStats();
+  describe('WordStats.guessesLeft', () => {
     it('it should be initialized to 5 when no parameter is passed in', () => {
       expect(stats.guessesLeft).toBe(5);
     });
 
     it('should be initialized to the number passed in as an argument when class is initialized', () => {
-      const gameStats = new GameStats(20);
-      expect(gameStats.guessesLeft).toBe(20);
+      const wordStats = new WordStats(20);
+      expect(wordStats.guessesLeft).toBe(20);
     });
   });
 

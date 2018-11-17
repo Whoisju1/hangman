@@ -1,4 +1,4 @@
-export class GameStats {
+export class WordStats {
   /**
    * @description Wrong letters guessed by the user. It initiates as an empty set
    * set was used because it is easy to manage and stores no duplicates
@@ -31,7 +31,7 @@ export class GameStats {
    * @param {string} letter - The letter that is being added
    * @returns the object for chaining object purposes
    */
-  public addToWrongLettersGuessed(letter: string): GameStats {
+  public addToWrongLettersGuessed(letter: string): WordStats {
     const isSingleLetter: boolean = /^([a-z]|[A-Z])$/.test(letter);
     if (isSingleLetter) {
       this._wrongLettersGuessed.add(letter);
@@ -43,7 +43,7 @@ export class GameStats {
    * clearAlreadyGuessed
    * @description This method empties the wrongLetterGuessed collection
    */
-  public clearAlreadyGuessed(): GameStats {
+  public clearAlreadyGuessed(): WordStats {
     this._wrongLettersGuessed.clear();
     return this;
   }
