@@ -39,6 +39,14 @@ describe('GameStats', () => {
         expect(stats.isAlreadyGuesses('x')).toBe(false);
       });
     });
+
+    describe('clearAlreadyGuessed', () => {
+      it('should remove all the letters from the letters guessed collection', async () => {
+        stats.clearAlreadyGuessed();
+        expect(stats.wrongLettersGuessed).toEqual([]);
+      });
+    });
+
    });
   });
 });
