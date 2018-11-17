@@ -3,6 +3,7 @@
  * @param {{ word: string, hint: string}} wordObject
  * @param {string} wordObject.word - The word to be found
  * @param {string} wordObject.hint - This is a clue to what what needs to be solved
+ * @static {number} wordQuantity
  */
 export class Word {
   public static wordQuantity = 0;
