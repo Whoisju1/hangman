@@ -26,10 +26,15 @@ module.exports = {
         use: { loader: 'babel-loader' },
         exclude: /node_modules/,
       },
-      // {
-      //   test: /\.html$/,
-      //   use: { loader: 'file-loader' },
-      // },
+      {
+        test: /\.html$/,
+        use: {
+          loader: 'html-loader',
+          options: {
+            attrs: ['img:src'],
+          },
+        },
+      },
       {
         test: /\.scss$/,
         use: [
@@ -38,6 +43,13 @@ module.exports = {
           'css-loader',
           'sass-loader',
         ],
+      },
+      {
+        test: /\.(jpg|gif|png)$/,
+        loader: 'file-loader',
+        options: {
+          name: 'images/[name].[ext]',
+        },
       },
     ],
   },
