@@ -20,3 +20,12 @@ body {
     background: linear-gradient(to right, #29323c, #485563);
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
+#root {
+    background: #29323c;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    right: 0;
+}

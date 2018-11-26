@@ -53,7 +53,9 @@ module.exports = {
       },
     ],
   },
-  // devTool: true,
+  resolve: {
+    extensions: ['.ts', '.js', '.tsx', '.jsx'],
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
