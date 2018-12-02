@@ -1,6 +1,7 @@
 import express from 'express';
 import webpack from 'webpack';
 import path from 'path';
+import open from 'open';
 import config from '../../config/webpack.dev.config';
 
 const compiler = webpack(config);
@@ -20,4 +21,8 @@ server.use(staticMiddleware);
 
 const { PORT = 5000 } = process.env;
 
-server.listen(PORT, () => `Server ready on http://localhost:${PORT}`);
+server.listen(PORT, () => {
+  const devUrl = `http://localhost:${PORT}`;
+  console.log(`Server ready on ${devUrl}`);
+  open(devUrl);
+});
