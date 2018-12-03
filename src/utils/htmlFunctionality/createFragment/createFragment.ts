@@ -3,7 +3,7 @@ type TransformTemplate<T> = (
   ...templateContent: string[] | number[] | Array<(data: T) => (string | number)>
 ) => DocumentFragment;
 
-type ICreateFragment = <T>(data: T) => TransformTemplate<T>;
+export type ICreateFragment = <T>(data: T) => TransformTemplate<T>;
 
 /**
  * @description This function is takes an object as the first element and returns a tag function.
