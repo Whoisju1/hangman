@@ -9,6 +9,7 @@ module.exports = {
     path: path.resolve(__dirname, '../docs'),
     filename: '[name]-bundle.js',
   },
+  devtool: 'eval-source-map',
   mode: 'development',
   devServer: {
     open: true,
