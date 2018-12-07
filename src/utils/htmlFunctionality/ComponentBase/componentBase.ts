@@ -15,6 +15,7 @@ export abstract class ComponentBase implements IComponent {
   public addClass(classNames: string | string[]) {
     if (Array.isArray(classNames)) {
       classNames.forEach((className) => this._element.classList.add(className));
+      return this;
     } else {
       this._element.classList.add(classNames);
     }
@@ -22,9 +23,11 @@ export abstract class ComponentBase implements IComponent {
 
   public removeClasses(className: string) {
     this._element.classList.remove(className);
+    return this;
   }
 
   public remove() {
     this._element.remove();
+    return this;
   }
 }
