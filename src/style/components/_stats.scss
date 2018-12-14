@@ -1,0 +1,25 @@
+.stats {
+  display: grid;
+  grid-area: stats;
+  grid-gap: 1rem;
+  grid-template-rows: 50% 50%;
+  &__area {
+    color: white;
+    font-size: 2rem;
+    @include gradient-text;
+    font-size: 200%;
+    font-weight: 800;
+    padding: 0 0 0 3%;
+    display: grid;
+    justify-content: start;
+    align-items: center;
+    &--game-wide,
+    &--word  {
+      // clip-path: circle(50%);
+    }
+  }
+  &__heading {
+    font-weight: 700;
+    color: white;
+  }
+}

@@ -3,10 +3,29 @@ import 'webpack-hot-middleware/client?reload=true';
 import './index.html';
 import './style/main.scss';
 
+import { GameContent } from './components/GameContent';
+import { HintArea } from './components/HintArea';
+import { LetterButtons } from './components/LetterButtons';
+import { MainContainer } from './components/MainContainer/';
+import { StatsSection } from './components/StatsSection';
+import { WordSection } from './components/WordSection';
+import { GameStats } from './game/StatsTracker/gameStats/gameStats';
+import { WordStats } from './game/StatsTracker/wordStats/wordStats';
 import { Header } from './Header/Header';
-import { MainContainer } from './MainContainer/MainContainer';
 import { LandingPage } from './pages/LandingPage/LandingPage';
 
+// initiate stats
+const wordStats = new WordStats();
+const wholeGameStats = new GameStats(10);
+
+const statsSection = new StatsSection(wholeGameStats, wordStats);
+const gameContent = new GameContent(statsSection.fragment);
+const letterButtons = new LetterButtons();
+const hintArea = new HintArea('This is the best you ever seen! :)');
+const wordSection = new WordSection('Fantastic');
+gameContent.addContent(letterButtons.fragment);
+gameContent.addContent(wordSection.fragment);
+gameContent.addContent(hintArea.fragment);
 const render = (elem: HTMLElement | DocumentFragment, container: HTMLElement) => {
   container.appendChild(elem);
 };
@@ -18,14 +37,21 @@ mainContainer.setContent(header.fragment);
 type StartGame = (event: KeyboardEvent | MouseEvent) => void;
 
 const startGame: StartGame = (e) => {
-  const { ctrlKey, type } = e;
+  const { ctrlKey } = e;
   let key = '';
   if (e instanceof KeyboardEvent) {
     key = e.key;
-    if (key === 'Enter' && !ctrlKey) landingPage.removeElement();
+    if (key === 'Enter' && !ctrlKey) {
+      initiateGame();
+    }
   } else if (e instanceof MouseEvent) {
-    landingPage.removeElement();
+    initiateGame();
   }
+};
+
+const initiateGame = () => {
+  landingPage.removeElement();
+  mainContainer.addMultiContent(gameContent.fragment, );
 };
 
 const landingPage: LandingPage = new LandingPage(startGame);

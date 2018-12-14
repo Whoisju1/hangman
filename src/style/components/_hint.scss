@@ -1,0 +1,9 @@
+.hint {
+  grid-area: hint;
+  border: .5px solid gray;
+  @include gradient-text;
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

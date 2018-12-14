@@ -1,4 +1,4 @@
-// =======abstacts==========
+// =======abstracts==========
 @import "abstracts/variables";
 @import "abstracts/mixins";
 // =======base=========
@@ -10,6 +10,11 @@
 @import "components/game";
 @import "components/intro";
 @import "components/modal";
+@import "components/stats";
+@import "components/button";
+@import "components/wordSection";
+@import "components/hint";
 // ============header============
+@import "layout/container";
 @import "layout/header";
 @import "layout/grid";

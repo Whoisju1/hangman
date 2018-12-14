@@ -1,0 +1,54 @@
+.button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition-property: transform, color;
+  transition-duration: .1s;
+  transition-timing-function: linear;
+  &:hover {
+    transform: translateY(-.9rem);
+    .button__letter--outline {
+      transition: transform 1s ease;
+      transform: scale(1.1);
+      transform-origin: center center;
+      fill: #487eb0;
+    }
+  };
+  &:active {
+    transform: translateY(-.7rem);
+    .button__letter--outline {
+      transition: transform .3s ease;
+      transform: scale(.8);
+      transform-origin: center center;
+      fill: #a29bfe;
+      stroke: none;
+    }
+    .button__letter--key {
+      fill: #2f3640;
+      stroke: transparent;
+      stroke-width: 2;
+      transform: translateY(1px);
+    }
+  }
+  &__letter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &--outline {
+      fill: #1e272e;
+    }
+    &--key {
+      dominant-baseline: middle;
+      font-size: 4rem;
+      fill: #ffffff;
+      text-anchor: middle;
+      stroke: #ffffff;
+      stroke-width: 1;
+    }
+    &--svg {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
