@@ -1,5 +1,5 @@
-import { ComponentBase } from '../utils/htmlFunctionality/ComponentBase/componentBase';
-import { createFragment } from '../utils/htmlFunctionality/createFragment/createFragment';
+import { ComponentBase } from '../../utils/htmlFunctionality/ComponentBase/componentBase';
+import { createFragment } from '../../utils/htmlFunctionality/createFragment/createFragment';
 
 export class Header extends ComponentBase {
   protected _fragment = createFragment({})`

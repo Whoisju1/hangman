@@ -4,15 +4,15 @@ import './index.html';
 import './style/main.scss';
 
 import { GameContent } from './components/GameContent';
+import { Header } from './components/Header/Header';
 import { HintArea } from './components/HintArea';
+import { LandingPage } from './components/LandingPage/LandingPage';
 import { LetterButtons } from './components/LetterButtons';
 import { MainContainer } from './components/MainContainer/';
 import { StatsSection } from './components/StatsSection';
 import { WordSection } from './components/WordSection';
-import { GameStats } from './game/StatsTracker/gameStats/gameStats';
-import { WordStats } from './game/StatsTracker/wordStats/wordStats';
-import { Header } from './Header/Header';
-import { LandingPage } from './pages/LandingPage/LandingPage';
+import { GameStats } from './gameTools/StatsTracker/gameStats/gameStats';
+import { WordStats } from './gameTools/StatsTracker/wordStats/wordStats';
 
 // initiate stats
 const wordStats = new WordStats();
