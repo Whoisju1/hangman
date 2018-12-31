@@ -6,7 +6,7 @@
     "scripts": {
         "start": "webpack-dev-server --open --progress --colors",
         "deploy": "gh-pages -d docs",
-        "dev": "nodemon --inspect --watch config --watch src/src/ src/server/main.js",
+        "dev": "nodemon --inspect --watch config --watch src/** src/server/main.js",
         "build": "webpack --progress --colors",
         "test": "jest --watch"
     },
