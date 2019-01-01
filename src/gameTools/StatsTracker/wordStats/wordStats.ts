@@ -56,4 +56,6 @@ export class WordStats {
   public isAlreadyGuesses(letter: string): boolean {
     return this._wrongLettersGuessed.has(letter);
   }
+
+  public decrementGuessesLeft = () => this._guessesLeft--;
 }

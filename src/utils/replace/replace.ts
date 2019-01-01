@@ -1,5 +1,5 @@
 import { IGuessEvalResult } from '../evaluateGuess/evaluateGuess';
-type Replace = (word: string, replacement: IGuessEvalResult) => string;
+export type Replace = (word: string, replacement: IGuessEvalResult) => string;
 
 /**
  * @example

@@ -13,7 +13,6 @@ interface IData {
 type DisplayEvent = (container: HTMLElement) => void;
 
 export class Modal extends ComponentBase {
-
   set onShow(func: DisplayEvent) {
     this._onShow = func;
   }
@@ -24,7 +23,7 @@ export class Modal extends ComponentBase {
   protected _fragment = createFragment({ ...this.data })`
   <div class="modal__backdrop">
     <div class="modal">
-      <div class="modal__title">
+    <div class="modal__title">
         <h2 class="modal__title--main">${({ title }) => title.main}</h2>
         ${({ title }) => title.sub ? `<h3 class="modal__title--sub">${title.sub}</h3>` : ''}
       </div>
@@ -40,6 +39,10 @@ export class Modal extends ComponentBase {
   constructor(public data: IData, content: Content) {
     super();
     (this._fragment.querySelector('.modal__content') as HTMLElement).appendChild(content);
+  }
+
+  set onClose(handleClose: () => void) {
+    this._beforeClose = handleClose;
   }
 
   public setContent = (content: Content | string) => {
@@ -67,6 +70,9 @@ export class Modal extends ComponentBase {
     if (this._onHide) {
       this._onHide(this._element);
     }
+    this._beforeClose();
     document.body.appendChild(this._fragment);
   }
+
+  private _beforeClose: () => void = () => null;
 }

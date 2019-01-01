@@ -5,10 +5,10 @@ export class WordSection extends ContainerBase {
   protected name = 'wordSection';
   private _characterElements: DocumentFragment[] = [];
 
-  constructor(public word: string) {
+  constructor(public word?: string) {
     super('wordSection');
-    this.makeCharacterElements(word);
-    this.setWord();
+    // tslint:disable-next-line:no-unused-expression
+    word && this.setWord(word);
   }
 
   public makeCharacterElements = (word: string) => {

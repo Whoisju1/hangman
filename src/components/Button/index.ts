@@ -24,8 +24,7 @@ export class Button extends ComponentBase {
     this._element.addEventListener('click', this._handlePress);
   }
 
-  private _handlePress = (e: MouseEvent) => {
-    // tslint:disable-next-line:no-console
-    console.log(this._letter);
+  private _handlePress = () => {
+    this._onPress(this._letter);
   }
 }

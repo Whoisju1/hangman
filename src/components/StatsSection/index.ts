@@ -1,5 +1,5 @@
-import { GameStats } from '../../game/StatsTracker/gameStats/gameStats';
-import { WordStats } from '../../game/StatsTracker/wordStats/wordStats';
+import { GameStats } from '../../gameTools/StatsTracker/gameStats/gameStats';
+import { WordStats } from '../../gameTools/StatsTracker/wordStats/wordStats';
 import { ComponentBase } from '../../utils/htmlFunctionality/ComponentBase/componentBase';
 import { createFragment } from '../../utils/htmlFunctionality/createFragment/createFragment';
 
@@ -28,5 +28,10 @@ export class StatsSection extends ComponentBase {
 
   constructor(private _stats: GameStats, private _wordStats: WordStats) {
     super();
+  }
+
+  public printStats = ({ wins, guessesLeft }: { wins?: number, guessesLeft?: number }) => {
+    if (wins) (this._element.querySelector('*') as HTMLElement).textContent = wins.toString();
+    if (guessesLeft) (this._element.querySelector('*') as HTMLElement).textContent = guessesLeft.toString();
   }
 }
